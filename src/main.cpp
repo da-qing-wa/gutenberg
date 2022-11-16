@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
 
 	BulletWorld mWorld;
 
-	MovingObject ground("ground", 0, mShader, btVector3(0.1, 0.1, 0.1), btVector3(0, 0, 0));
+	MovingObject ground("ground", 0, mShader, btVector3(0.01, 0.01, 0.01), btVector3(0, 0, 0));
 	mWorld.addRigidBody(ground.getBody());
 
 	MovingObject neck_walker("neck_walker", 1.0, mShader, btVector3(0.1, 0.1, 0.1), btVector3(0, 10, 0));
