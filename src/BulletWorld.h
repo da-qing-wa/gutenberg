@@ -16,7 +16,7 @@ public:
     virtual ~BulletWorld();
 
     virtual void addRigidBody(btRigidBody *body);
-    virtual void step();
+    virtual void step(float dt);
     btClock& getClock();
 
 };

@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
 		// reset the clock to 0
 		mWorld.getClock().reset();
 		// update the scene (convert ms to s)
-		mWorld.step();
+		mWorld.step(dt/1000.0f);
 
 		// update the camera
 		//UpdateCamera();
