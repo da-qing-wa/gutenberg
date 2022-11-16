@@ -33,9 +33,9 @@ void BulletWorld::addRigidBody(btRigidBody *body)
     mDynamicsWorld->addRigidBody(body);
 }
 
-void BulletWorld::step()
+void BulletWorld::step(float dt)
 {
-    mDynamicsWorld->stepSimulation(1.0f / 60.0f, 10);
+    mDynamicsWorld->stepSimulation(dt);
 }
 
 btClock& BulletWorld::getClock()
