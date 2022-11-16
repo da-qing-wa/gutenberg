@@ -1,6 +1,4 @@
 #include "MovingObject.h"
-#include <OpenGLWindow/GLInstanceGraphicsShape.h>
-#include <iostream>
 
 static glm::mat4 btScalar16_to_mat4(btScalar transform[16])
 {
@@ -34,7 +32,7 @@ void Meshes_to_GLInstanceVertexBuff(vector<Mesh>& meshes, btScalar* btScalarBuf)
     }
 }
 
-MovingObject::MovingObject(const char* objName, btScalar mass, Shader& shader, btVector3 scaling, const btVector3& initLoc)
+MovingObject::MovingObject(string objName, btScalar mass, Shader& shader, btVector3 scaling, const btVector3& initLoc)
 {
     btTransform transform;
     transform.setIdentity();
@@ -45,19 +43,31 @@ MovingObject::MovingObject(const char* objName, btScalar mass, Shader& shader, b
     objShader = shader;
     objScaling = scaling;
 
-    objModel.setModel(objName);
+    string objDir = "resources/objects/" + objName + "/" + objName + ".obj";
+    objModel.setModel(objDir);
 
     int vertices_num = 0;
     for (int i = 0; i < objModel.meshes.size(); i++)
     {
         vertices_num += objModel.meshes[i].vertices.size();
     }
-    btScalar* btScalarBuf = new btScalar[vertices_num * sizeof(GLInstanceVertex)];
+
+    //struct GLInstanceVertex
+    //{
+    //    float xyzw[4];
+    //    float normal[3];
+    //    float uv[2];
+    //};
+    // 36 means the size of GLInstanceVertex
+    btScalar* btScalarBuf = new btScalar[vertices_num * 36];
     Meshes_to_GLInstanceVertexBuff(objModel.meshes, btScalarBuf);
-    printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objName);
+    printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objDir.c_str());
 
     // generate collision shape
-    btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, sizeof(GLInstanceVertex));
+
+    //btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, sizeof(GLInstanceVertex));
+    btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, 36);
+    
 
     // set scaling
     shape->setLocalScaling(objScaling);
@@ -86,8 +96,6 @@ void MovingObject::draw()
     mBody->getMotionState()->getWorldTransform(mWorldTrans);
     btScalar buf[16];
     mWorldTrans.getOpenGLMatrix(buf);
-    std::cout << buf[13] << std::endl;
-
     // render the loaded model
     objShader.use();
     glm::mat4 model = btScalar16_to_mat4(buf);

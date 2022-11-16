@@ -36,6 +36,9 @@
     <ClCompile Include="src\learnopengl\model.cpp">
       <Filter>头文件\learnopengl</Filter>
     </ClCompile>
+    <ClCompile Include="include\glad\glad.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletWorld.h">
@@ -54,12 +57,6 @@
       <Filter>头文件\learnopengl</Filter>
     </ClInclude>
     <ClInclude Include="src\learnopengl\shader.h">
-      <Filter>头文件\learnopengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\learnopengl\shader_m.h">
-      <Filter>头文件\learnopengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\learnopengl\shader_s.h">
       <Filter>头文件\learnopengl</Filter>
     </ClInclude>
   </ItemGroup>
