@@ -11,7 +11,11 @@ add_subdirectory(model)
 add_subdirectory(learnopengl)
 
 file(GLOB SRCFILES *.cpp)
-set(SRCFILES ${SRCFILES} ${CMAKE_SOURCE_DIR}/include/glad/glad.c)
+set(SRCFILES
+	${CMAKE_SOURCE_DIR}/include/glad/glad.c
+	${CMAKE_SOURCE_DIR}/include/stb_image.cpp
+	${SRCFILES} 
+)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SRCFILES})
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
@@ -21,4 +25,4 @@ target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC ${Bullet_DIR}/${BULLET_ROOT
 target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC 
 	model learnopengl
 	BulletDynamics BulletCollision LinearMath assimp
-	GL glfw ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY})
+	GL glfw ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY} ${CMAKE_DL_LIBS})
