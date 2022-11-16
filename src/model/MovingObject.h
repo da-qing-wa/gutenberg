@@ -13,7 +13,7 @@ protected:
     btVector3 objScaling;
 
 public:
-    MovingObject(const char* objName, btScalar mass, Shader& shader, btVector3 scaling, const btVector3 &initLoc = btVector3());
+    MovingObject(string objName, btScalar mass, Shader& shader, btVector3 scaling, const btVector3 &initLoc = btVector3());
     virtual ~MovingObject();
 
     btRigidBody *getBody();
