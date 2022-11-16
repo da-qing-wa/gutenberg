@@ -1,5 +1,4 @@
 #include "MovingObject.h"
-#include <OpenGLWindow/GLInstanceGraphicsShape.h>
 #include <iostream>
 
 static glm::mat4 btScalar16_to_mat4(btScalar transform[16])
@@ -52,12 +51,12 @@ MovingObject::MovingObject(const char* objName, btScalar mass, Shader& shader, b
     {
         vertices_num += objModel.meshes[i].vertices.size();
     }
-    btScalar* btScalarBuf = new btScalar[vertices_num * sizeof(GLInstanceVertex)];
+    btScalar* btScalarBuf = new btScalar[vertices_num * 9 * sizeof(float)];
     Meshes_to_GLInstanceVertexBuff(objModel.meshes, btScalarBuf);
     printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objName);
 
     // generate collision shape
-    btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, sizeof(GLInstanceVertex));
+    btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, 9 * sizeof(float));
 
     // set scaling
     shape->setLocalScaling(objScaling);

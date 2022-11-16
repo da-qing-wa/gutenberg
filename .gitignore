@@ -368,3 +368,4 @@ include/
 lib/
 x64/
 .vs/
+.vscode/
