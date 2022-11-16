@@ -19,6 +19,8 @@ int main(int argc, char* argv[])
 	/// Do some simulation
 
 	///-----stepsimulation_start-----
+
+	//todo while
 	for (int i = 0; i < 150; i++)
 	{
 		mWorld.step();

@@ -2,14 +2,18 @@
 #define _MOVING_OBJECT_H
 
 #include "btBulletDynamicsCommon.h"
+#include "../learnopengl/model.h"
 
 class MovingObject {
 protected:
     btRigidBody* mBody;
     btTransform mWorldTrans;
+    Model objModel;
+    Shader objShader;
+    btVector3 objScaling;
 
 public:
-    MovingObject(btScalar mass, btCollisionShape* shape, const btVector3 &initLoc = btVector3());
+    MovingObject(const char* objName, btScalar mass, Shader& shader, btVector3 scaling, const btVector3 &initLoc = btVector3());
     virtual ~MovingObject();
 
     btRigidBody *getBody();
