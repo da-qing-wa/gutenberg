@@ -136,19 +136,24 @@
   <ItemGroup>
     <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="src\BulletWorld.cpp" />
+    <ClCompile Include="src\GutenbergScene.cpp" />
     <ClCompile Include="src\learnopengl\model.cpp" />
+    <ClCompile Include="src\learnopengl\shader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\model\MovingObject.cpp" />
     <ClCompile Include="src\model\StaticObject.cpp" />
+    <ClCompile Include="src\shader\MultiLightShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletWorld.h" />
+    <ClInclude Include="src\GutenbergScene.h" />
     <ClInclude Include="src\learnopengl\camera.h" />
     <ClInclude Include="src\learnopengl\mesh.h" />
     <ClInclude Include="src\learnopengl\model.h" />
     <ClInclude Include="src\learnopengl\shader.h" />
     <ClInclude Include="src\model\MovingObject.h" />
     <ClInclude Include="src\model\StaticObject.h" />
+    <ClInclude Include="src\shader\MultiLightShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

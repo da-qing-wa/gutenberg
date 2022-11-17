@@ -1,8 +1,7 @@
 #include "StaticObject.h"
 #include <iostream>
 
-static btVector3* gVertices = 0;
-static int* gIndices = 0;
+
 static btBvhTriangleMeshShape* trimeshShape = 0;
 static btRigidBody* staticBody = 0;
 static float waveheight = 5.f;
@@ -92,51 +91,53 @@ StaticObject::StaticObject(string objName, Shader& shader, btVector3 scaling, co
 
     printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objDir.c_str());
 
-
-
-
-
     // generate collision shape
-    btBvhTriangleMeshShape* shape = 0;
+    btCompoundShape* shape = new btCompoundShape();
+
+    for (int i = 0; i < objModel.meshes.size(); i++)
+    {
+        btBvhTriangleMeshShape* tri_mesh_shape = 0;
+        btVector3* gVertices = new btVector3[totalVerts];
+        int* gIndices = new int[totalTriangles * 3];
+
+
+        setVertexPositions(waveheight, 0.f);
+
+        int index = 0;
+        for (i = 0; i < NUM_VERTS_X - 1; i++)
+        {
+            for (int j = 0; j < NUM_VERTS_Y - 1; j++)
+            {
+                gIndices[index++] = j * NUM_VERTS_X + i;
+                gIndices[index++] = j * NUM_VERTS_X + i + 1;
+                gIndices[index++] = (j + 1) * NUM_VERTS_X + i + 1;
+
+                gIndices[index++] = j * NUM_VERTS_X + i;
+                gIndices[index++] = (j + 1) * NUM_VERTS_X + i + 1;
+                gIndices[index++] = (j + 1) * NUM_VERTS_X + i;
+            }
+        }
+
+        //btTriangleIndexVertexArray(int numTriangles, int* triangleIndexBase, int triangleIndexStride, int numVertices, btScalar* vertexBase, int vertexStride);
+        btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(totalTriangles,
+            gIndices,
+            indexStride,
+            totalVerts, (btScalar*)&gVertices[0].x(), vertStride);
+
+
+        bool useQuantizedAabbCompression = true;
+        btVector3 aabbMin(-1000, -1000, -1000), aabbMax(1000, 1000, 1000);
+        //shape = new btBvhTriangleMeshShape(m_indexVertexArrays, useQuantizedAabbCompression, aabbMin, aabbMax);
+
+    }
+
 
 
 
 
     
 
-    gVertices = new btVector3[totalVerts];
-    gIndices = new int[totalTriangles * 3];
 
-    int i;
-
-
-    setVertexPositions(waveheight, 0.f);
-
-    int index = 0;
-    for (i = 0; i < NUM_VERTS_X - 1; i++)
-    {
-        for (int j = 0; j < NUM_VERTS_Y - 1; j++)
-        {
-            gIndices[index++] = j * NUM_VERTS_X + i;
-            gIndices[index++] = j * NUM_VERTS_X + i + 1;
-            gIndices[index++] = (j + 1) * NUM_VERTS_X + i + 1;
-
-            gIndices[index++] = j * NUM_VERTS_X + i;
-            gIndices[index++] = (j + 1) * NUM_VERTS_X + i + 1;
-            gIndices[index++] = (j + 1) * NUM_VERTS_X + i;
-        }
-    }
-
-    //btTriangleIndexVertexArray(int numTriangles, int* triangleIndexBase, int triangleIndexStride, int numVertices, btScalar* vertexBase, int vertexStride);
-    btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(totalTriangles,
-        gIndices,
-        indexStride,
-        totalVerts, (btScalar*)&gVertices[0].x(), vertStride);
-
-
-    bool useQuantizedAabbCompression = true;
-    btVector3 aabbMin(-1000, -1000, -1000), aabbMax(1000, 1000, 1000);
-    shape = new btBvhTriangleMeshShape(m_indexVertexArrays, useQuantizedAabbCompression, aabbMin, aabbMax);
 
 
 

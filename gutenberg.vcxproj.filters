@@ -22,6 +22,15 @@
     <Filter Include="头文件\learnopengl">
       <UniqueIdentifier>{686a762f-478c-4f52-bfe1-b2d1c0d91a0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\shader">
+      <UniqueIdentifier>{256ff781-3a9b-4632-a72a-ac48ac53d16e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\shader">
+      <UniqueIdentifier>{faf24a19-ee54-4869-a3bc-71b22fd5f8dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\learnopengl">
+      <UniqueIdentifier>{83692240-a1e1-4bc7-9b96-f478af0f8d8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BulletWorld.cpp">
@@ -33,14 +42,23 @@
     <ClCompile Include="src\model\MovingObject.cpp">
       <Filter>源文件\model</Filter>
     </ClCompile>
-    <ClCompile Include="src\learnopengl\model.cpp">
-      <Filter>头文件\learnopengl</Filter>
-    </ClCompile>
     <ClCompile Include="include\glad\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\model\StaticObject.cpp">
       <Filter>源文件\model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GutenbergScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader\MultiLightShader.cpp">
+      <Filter>源文件\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\learnopengl\model.cpp">
+      <Filter>源文件\learnopengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\learnopengl\shader.cpp">
+      <Filter>源文件\learnopengl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="src\model\StaticObject.h">
       <Filter>头文件\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GutenbergScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shader\MultiLightShader.h">
+      <Filter>头文件\shader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
