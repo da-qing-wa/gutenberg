@@ -42,6 +42,7 @@ void GutenbergScene::moveStatic(float time)
     model = glm::rotate(glm::make_mat4(buf), glm::radians(12 * time), AXIS_Y);
     trans.setFromOpenGLMatrix(glm::value_ptr(model));
     concav_ground->getBody()->getMotionState()->setWorldTransform(trans);
+    concav_ground->getBody()->setWorldTransform(trans);
 }
 
 void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
