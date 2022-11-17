@@ -22,42 +22,28 @@ StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, co
     {
         vertices_num += objModel.meshes[i].vertices.size();
     }
-    btScalar* btScalarBuf = new btScalar[vertices_num * 9 * sizeof(float)];
 
     printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objDir.c_str());
 
     // generate collision shape
     btCompoundShape* shape = new btCompoundShape();
 
+    btTransform trans;
+    trans.setIdentity();
     for (int i = 0; i < objModel.meshes.size(); i++)
     {
-        btVector3* gVertices = new btVector3[objModel.meshes[i].vertices.size()];
-        int* gIndices = new int[objModel.meshes[i].indices.size()];
-
-        for (int j = 0; j < objModel.meshes[i].vertices.size(); j++)
-        {
-            gVertices[j].setX(objModel.meshes[i].vertices[j].Position.x);
-            gVertices[j].setY(objModel.meshes[i].vertices[j].Position.y);
-            gVertices[j].setZ(objModel.meshes[i].vertices[j].Position.z);
-        }
-        for (int j = 0; j < objModel.meshes[i].indices.size(); j++)
-        {
-            gIndices[j] = objModel.meshes[i].indices[j];
-        }
 
         btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(
             objModel.meshes[i].indices.size() / 3,
-            gIndices,
+            (int*)objModel.meshes[i].indices.data(),
             3 * sizeof(int),
             objModel.meshes[i].vertices.size(),
-            (btScalar*)&gVertices[0].x(),
-            sizeof(btVector3)
+            (btScalar*)(glm::value_ptr(objModel.meshes[i].vertices[0].Position)),
+            sizeof(Vertex)
         );
 
         btBvhTriangleMeshShape* tri_mesh_shape = new btBvhTriangleMeshShape(m_indexVertexArrays, true);
-        btTransform* trans = new btTransform;
-        trans->setIdentity();
-        shape->addChildShape(*trans, tri_mesh_shape);
+        shape->addChildShape(trans, tri_mesh_shape);
     }
 
     shape->setLocalScaling(objScaling);
@@ -65,7 +51,6 @@ StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, co
     btRigidBody::btRigidBodyConstructionInfo rbInfo(0, mMotionState, shape, localInertia);
     rbInfo.m_friction = friction;
     mBody = new btRigidBody(rbInfo);
-
 }
 
 StaticObject::~StaticObject()
