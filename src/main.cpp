@@ -102,12 +102,15 @@ int main(int argc, char* argv[])
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
 	float lastFrame = getTimeSecs();
+	float startFrame = lastFrame;
 	while (!glfwWindowShouldClose(window))
 	{
 		float currentFrame = getTimeSecs();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		mScene->moveStatic(currentFrame - startFrame);
 
 		mWorld->step(currentFrame - lastFrame);
 		lastFrame = currentFrame;

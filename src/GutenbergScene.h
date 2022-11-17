@@ -22,6 +22,7 @@ public:
     ~GutenbergScene();
 
     void addPhysics(BulletWorld *world);
+    void moveStatic(float time);
     void render(const glm::mat4& projection, const Camera& camera);
 };
 

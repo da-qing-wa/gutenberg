@@ -11,12 +11,14 @@ protected:
     Model objModel;
     Shader objShader;
     btVector3 objScaling;
+    btVector3 origLoc;
 
 public:
     StaticObject(string objName, Shader* shader, btVector3 scaling, const btVector3& initLoc = btVector3(), btScalar friction = 0.5);
     virtual ~StaticObject();
 
     btRigidBody* getBody();
+    const btVector3 getOriginalLocation() const;
     virtual void draw();
 };
 

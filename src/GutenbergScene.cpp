@@ -27,6 +27,22 @@ GutenbergScene::~GutenbergScene()
     delete neck_walker;
 }
 
+void GutenbergScene::moveStatic(float time)
+{
+    const glm::vec3 AXIS_Y = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    btTransform trans;
+    float buf[16];
+    glm::mat4 model;
+
+    trans.setIdentity();
+    trans.setOrigin(concav_ground->getOriginalLocation());
+    trans.getOpenGLMatrix(buf);
+    model = glm::rotate(glm::make_mat4(buf), glm::radians(12 * time), AXIS_Y);
+    trans.setFromOpenGLMatrix(glm::value_ptr(model));
+    concav_ground->getBody()->getMotionState()->setWorldTransform(trans);
+}
+
 void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
 {
     multilightShader->use(camera.Position, camera.Front);

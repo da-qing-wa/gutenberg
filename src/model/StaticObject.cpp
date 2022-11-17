@@ -13,6 +13,7 @@ StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, co
 
     objShader = *shader;
     objScaling = scaling;
+    origLoc = initLoc;
 
     string objDir = "resources/objects/" + objName + "/" + objName + ".obj";
     objModel.setModel(objDir);
@@ -62,6 +63,11 @@ StaticObject::~StaticObject()
 btRigidBody* StaticObject::getBody()
 {
     return mBody;
+}
+
+const btVector3 StaticObject::getOriginalLocation() const
+{
+    return origLoc;
 }
 
 void StaticObject::draw()
