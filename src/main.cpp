@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
+	std::cout << glGetString(GL_VERSION) << std::endl;
 	glEnable(GL_DEPTH_TEST);
 
 	BulletWorld *mWorld = new BulletWorld();
@@ -101,7 +102,9 @@ int main(int argc, char* argv[])
 	
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
+
 	float lastFrame = getTimeSecs();
+	float startFrame = getTimeSecs();
 	while (!glfwWindowShouldClose(window))
 	{
 		float currentFrame = getTimeSecs();
@@ -109,14 +112,18 @@ int main(int argc, char* argv[])
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		mScene->setWorldTransform(mWorld, currentFrame - startFrame);
+
 		mWorld->step(currentFrame - lastFrame);
 		lastFrame = currentFrame;
 
 		// update the camera
 		//UpdateCamera();
 
+		
+
 		// render the scene
-		mScene->render(projection, camera);
+		mScene->render(projection, camera, currentFrame - startFrame);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

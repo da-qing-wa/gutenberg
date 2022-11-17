@@ -17,6 +17,8 @@ public:
 
     virtual void addRigidBody(btRigidBody *body);
     virtual void step(float dt);
+
+    btDiscreteDynamicsWorld* getDynamicsWorld();
 };
 
 #endif /* _BULLET_WORLD_H */

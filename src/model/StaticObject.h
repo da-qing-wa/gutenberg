@@ -17,7 +17,8 @@ public:
     virtual ~StaticObject();
 
     btRigidBody* getBody();
-    virtual void draw();
+    btTransform* getWorldTrans();
+    virtual void draw(float time);
 };
 
 #endif /* _STATIC_OBJECT_H */

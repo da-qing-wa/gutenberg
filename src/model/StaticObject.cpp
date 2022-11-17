@@ -1,5 +1,6 @@
 #include "StaticObject.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 
@@ -79,14 +80,21 @@ btRigidBody* StaticObject::getBody()
     return mBody;
 }
 
-void StaticObject::draw()
+btTransform* StaticObject::getWorldTrans()
+{
+    return &mWorldTrans;
+}
+
+void StaticObject::draw(float time)
 {
     mBody->getMotionState()->getWorldTransform(mWorldTrans);
+    //mWorldTrans = mBody->getWorldTransform();
     btScalar buf[16];
     mWorldTrans.getOpenGLMatrix(buf);
     // render the loaded model
     objShader.use();
     glm::mat4 model = glm::make_mat4(buf);
+    model = glm::rotate(model, glm::radians(12 * time), glm::vec3(0, 1, 0));
     model = glm::scale(model, glm::vec3(objScaling[0], objScaling[1], objScaling[2]));
     objShader.setMat4("model", model);
     objModel.Draw(&objShader);
