@@ -137,6 +137,7 @@
     <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="src\BulletWorld.cpp" />
     <ClCompile Include="src\GutenbergScene.cpp" />
+    <ClCompile Include="src\learnopengl\mesh.cpp" />
     <ClCompile Include="src\learnopengl\model.cpp" />
     <ClCompile Include="src\learnopengl\shader.cpp" />
     <ClCompile Include="src\main.cpp" />

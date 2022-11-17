@@ -60,6 +60,9 @@
     <ClCompile Include="src\learnopengl\shader.cpp">
       <Filter>源文件\learnopengl</Filter>
     </ClCompile>
+    <ClCompile Include="src\learnopengl\mesh.cpp">
+      <Filter>源文件\learnopengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletWorld.h">

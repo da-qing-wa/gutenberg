@@ -3,6 +3,7 @@
 
 #include "BulletWorld.h"
 #include "model/MovingObject.h"
+#include "model/StaticObject.h"
 #include "shader/MultiLightShader.h"
 #include "learnopengl/camera.h"
 
@@ -12,7 +13,8 @@ protected:
     MultiLightShader *multilightShader;
 
     // objects
-    MovingObject *ground;
+    //MovingObject *ground;
+    StaticObject *concav_ground;
     MovingObject *neck_walker;
 
 public:
