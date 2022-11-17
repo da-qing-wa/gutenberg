@@ -1,38 +1,6 @@
 #include "MovingObject.h"
 #include <iostream>
 
-static glm::mat4 btScalar16_to_mat4(btScalar transform[16])
-{
-    glm::mat4 model = glm::mat4(
-        transform[0], transform[1], transform[2], transform[3],
-        transform[4], transform[5], transform[6], transform[7],
-        transform[8], transform[9], transform[10], transform[11],
-        transform[12], transform[13], transform[14], transform[15]
-    );
-    return model;
-}
-
-static void Meshes_to_GLInstanceVertexBuff(vector<Mesh>& meshes, btScalar* btScalarBuf)
-{
-    int p_buf = 0;
-    for (int i = 0; i < meshes.size(); i++)
-    {
-        for (int j = 0; j < meshes[i].vertices.size(); j++)
-        {
-            btScalarBuf[p_buf + 0] = meshes[i].vertices[j].Position[0];
-            btScalarBuf[p_buf + 1] = meshes[i].vertices[j].Position[1];
-            btScalarBuf[p_buf + 2] = meshes[i].vertices[j].Position[2];
-            btScalarBuf[p_buf + 3] = 1;
-            btScalarBuf[p_buf + 4] = meshes[i].vertices[j].Normal[0];
-            btScalarBuf[p_buf + 5] = meshes[i].vertices[j].Normal[1];
-            btScalarBuf[p_buf + 6] = meshes[i].vertices[j].Normal[2];
-            btScalarBuf[p_buf + 7] = meshes[i].vertices[j].TexCoords[0];
-            btScalarBuf[p_buf + 8] = meshes[i].vertices[j].TexCoords[1];
-            p_buf += 9;
-        }
-    }
-}
-
 MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVector3 scaling, const btVector3& initLoc, btScalar friction, int shapeType)
 {
     btTransform transform;
@@ -70,9 +38,11 @@ MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVect
     }
     else
     {
-        btScalar* btScalarBuf = new btScalar[vertices_num * 9 * sizeof(float)];
-        Meshes_to_GLInstanceVertexBuff(objModel.meshes, btScalarBuf);
-        btConvexHullShape *convexshape = new btConvexHullShape(btScalarBuf, vertices_num, 9 * sizeof(float));
+        btConvexHullShape *convexshape = new btConvexHullShape();
+        for (auto mh : objModel.meshes)
+            for (auto mhv : mh.vertices)
+                convexshape->addPoint(btVector3(mhv.Position.x, mhv.Position.y, mhv.Position.z), false);
+        convexshape->recalcLocalAabb();
         // set scaling
         convexshape->setLocalScaling(objScaling);
         convexshape->optimizeConvexHull();
@@ -89,6 +59,7 @@ MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVect
 
 MovingObject::~MovingObject()
 {
+    delete mBody->getCollisionShape();
     delete mBody->getMotionState();
     delete mBody;
 }
@@ -104,7 +75,7 @@ void MovingObject::draw()
     btScalar buf[16];
     mWorldTrans.getOpenGLMatrix(buf);
     // render the loaded model
-    glm::mat4 model = btScalar16_to_mat4(buf);
+    glm::mat4 model = glm::make_mat4(buf);
     model = glm::scale(model, glm::vec3(objScaling[0], objScaling[1], objScaling[2]));
     objShader->setMat4("model", model);
     objModel.Draw(objShader);
