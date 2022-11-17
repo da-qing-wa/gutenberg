@@ -9,7 +9,7 @@ protected:
     btCollisionDispatcher* mDispatcher;
     btBroadphaseInterface* mOverlappingPairCache;
     btSequentialImpulseConstraintSolver* mSolver;
-    btDiscreteDynamicsWorld* mDynamicsWorld;
+    
     btClock mClock;
 public:
     BulletWorld();
@@ -18,7 +18,7 @@ public:
     virtual void addRigidBody(btRigidBody *body);
     virtual void step(float dt);
     btClock& getClock();
-
+    btDiscreteDynamicsWorld* mDynamicsWorld;
 };
 
 

@@ -2,9 +2,13 @@
 
 #include "BulletWorld.h"
 #include "model/MovingObject.h"
+#include "model/StaticObject.h"
 #include "learnopengl/camera.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "LinearMath/btIDebugDraw.h"
+//#include "GLDebugDrawer.h"
 
 #include "stb_image.h"
 
@@ -16,6 +20,7 @@
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
 Camera camera(glm::vec3(-4.0f, 2.0f, 4.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW + 45, PITCH - 10);
+
 // positions of the point lights
 glm::vec3 pointLightPositions[] = {
 	glm::vec3(1.0f,  0.3f,  0.0f),
@@ -85,6 +90,36 @@ void set_multi_lights(Shader& shader, glm::vec3 pointLightPositions[], Camera& c
 	shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 }
 
+
+void UpdateCamera() 
+{
+
+}
+
+//void BulletOpenGLApplication::DrawObj(GLInstanceGraphicsShape* glmesh) {
+//}
+//
+//void BulletOpenGLApplication::RotateCamera(float &angle, float value) {
+//	// change the value (it is passed by reference, so we
+//	// can edit it here)
+//	angle -= value;
+//	// keep the value within bounds
+//	if (angle < 0) angle += 360;
+//	if (angle >= 360) angle -= 360;
+//	// update the camera since we changed the angular value
+//	UpdateCamera();
+//}
+//
+//void BulletOpenGLApplication::ZoomCamera(float distance) {
+//	// change the distance value
+//	m_cameraDistance -= distance;
+//	// prevent it from zooming in too far
+//	if (m_cameraDistance < 0.1f) m_cameraDistance = 0.1f;
+//	// update the camera since we changed the zoom distance
+//	UpdateCamera();
+//}
+
+
 int main(int argc, char* argv[])
 {
 	// glfw: initialize and configure
@@ -136,11 +171,17 @@ int main(int argc, char* argv[])
 
 	BulletWorld mWorld;
 
-	MovingObject ground("ground", 0, mShader, btVector3(0.01, 0.01, 0.01), btVector3(0, 0, 0));
-	mWorld.addRigidBody(ground.getBody());
+	//MovingObject ground("ground", 0, mShader, btVector3(0.01, 0.01, 0.01), btVector3(0, 0, 0));
+	//mWorld.addRigidBody(ground.getBody());
 
 	MovingObject neck_walker("neck_walker", 1.0, mShader, btVector3(0.1, 0.1, 0.1), btVector3(0, 10, 0));
 	mWorld.addRigidBody(neck_walker.getBody());
+
+	//MovingObject ZLO200("ZLO200", 1.0, mShader, btVector3(0.1, 0.1, 0.1), btVector3(0, 20, 0));
+	//mWorld.addRigidBody(ZLO200.getBody());
+
+	StaticObject triground("ZLO200", mShader, btVector3(0.1, 0.1, 0.1), btVector3(0, 0, 0));
+	mWorld.addRigidBody(triground.getBody());
 
 	
 
@@ -175,9 +216,12 @@ int main(int argc, char* argv[])
 
 		//// render the scene
 		//RenderScene(camera);
+		mWorld.mDynamicsWorld->debugDrawWorld();
 
-		ground.draw();
+		//ground.draw();
+		triground.draw();
 		neck_walker.draw();
+		
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
