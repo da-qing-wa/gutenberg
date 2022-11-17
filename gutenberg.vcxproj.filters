@@ -39,6 +39,9 @@
     <ClCompile Include="include\glad\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\model\StaticObject.cpp">
+      <Filter>源文件\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletWorld.h">
@@ -58,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="src\learnopengl\shader.h">
       <Filter>头文件\learnopengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model\StaticObject.h">
+      <Filter>头文件\model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

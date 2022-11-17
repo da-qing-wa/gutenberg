@@ -17,7 +17,6 @@ public:
 
     virtual void addRigidBody(btRigidBody *body);
     virtual void step(float dt);
-
 };
 
 #endif /* _BULLET_WORLD_H */

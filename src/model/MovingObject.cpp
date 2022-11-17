@@ -1,4 +1,5 @@
 #include "MovingObject.h"
+#include <iostream>
 
 static glm::mat4 btScalar16_to_mat4(btScalar transform[16])
 {
@@ -32,12 +33,12 @@ static void Meshes_to_GLInstanceVertexBuff(vector<Mesh>& meshes, btScalar* btSca
     }
 }
 
-MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVector3 scaling, const btVector3& initLoc)
+MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVector3 scaling, const btVector3& initLoc, btScalar friction, int shapeType)
 {
     btTransform transform;
     transform.setIdentity();
     transform.setOrigin(initLoc);
-    
+
     btVector3 localInertia(0, 0, 0);
 
     objShader = shader;
@@ -51,23 +52,39 @@ MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVect
     {
         vertices_num += objModel.meshes[i].vertices.size();
     }
-    btScalar* btScalarBuf = new btScalar[vertices_num * 9 * sizeof(float)];
-    Meshes_to_GLInstanceVertexBuff(objModel.meshes, btScalarBuf);
+
     printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objDir.c_str());
 
+
+    btCollisionShape* shape = 0;
+
     // generate collision shape
-    btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, 9 * sizeof(float));
+    if (shapeType == SPHERE_SHAPE_PROXYTYPE)
+    {
+        shape = new btSphereShape(scaling[0]);
 
-
-    // set scaling
-    shape->setLocalScaling(objScaling);
-
-    shape->optimizeConvexHull();
+    }
+    else if (shapeType == COMPOUND_SHAPE_PROXYTYPE)
+    {
+        //shape = new btCompoundShape();
+    }
+    else
+    {
+        btScalar* btScalarBuf = new btScalar[vertices_num * 9 * sizeof(float)];
+        Meshes_to_GLInstanceVertexBuff(objModel.meshes, btScalarBuf);
+        btConvexHullShape *convexshape = new btConvexHullShape(btScalarBuf, vertices_num, 9 * sizeof(float));
+        // set scaling
+        convexshape->setLocalScaling(objScaling);
+        convexshape->optimizeConvexHull();
+        shape = convexshape;
+    }
     if (mass > 1e-5)
         shape->calculateLocalInertia(mass, localInertia);
-    btDefaultMotionState *mMotionState = new btDefaultMotionState(transform);
+    btDefaultMotionState* mMotionState = new btDefaultMotionState(transform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, mMotionState, shape, localInertia);
+    rbInfo.m_friction = friction;
     mBody = new btRigidBody(rbInfo);
+
 }
 
 MovingObject::~MovingObject()

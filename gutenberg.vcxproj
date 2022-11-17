@@ -139,6 +139,7 @@
     <ClCompile Include="src\learnopengl\model.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\model\MovingObject.cpp" />
+    <ClCompile Include="src\model\StaticObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletWorld.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="src\learnopengl\model.h" />
     <ClInclude Include="src\learnopengl\shader.h" />
     <ClInclude Include="src\model\MovingObject.h" />
+    <ClInclude Include="src\model\StaticObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -40,6 +40,36 @@ float getTimeSecs()
 #endif 
 }
 
+
+void UpdateCamera() 
+{
+
+}
+
+//void BulletOpenGLApplication::DrawObj(GLInstanceGraphicsShape* glmesh) {
+//}
+//
+//void BulletOpenGLApplication::RotateCamera(float &angle, float value) {
+//	// change the value (it is passed by reference, so we
+//	// can edit it here)
+//	angle -= value;
+//	// keep the value within bounds
+//	if (angle < 0) angle += 360;
+//	if (angle >= 360) angle -= 360;
+//	// update the camera since we changed the angular value
+//	UpdateCamera();
+//}
+//
+//void BulletOpenGLApplication::ZoomCamera(float distance) {
+//	// change the distance value
+//	m_cameraDistance -= distance;
+//	// prevent it from zooming in too far
+//	if (m_cameraDistance < 0.1f) m_cameraDistance = 0.1f;
+//	// update the camera since we changed the zoom distance
+//	UpdateCamera();
+//}
+
+
 int main(int argc, char* argv[])
 {
 	glfwInit();
