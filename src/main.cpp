@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
+	std::cout << glGetString(GL_VERSION) << std::endl;
 	glEnable(GL_DEPTH_TEST);
 
 	BulletWorld *mWorld = new BulletWorld();
@@ -100,6 +101,7 @@ int main(int argc, char* argv[])
 	mScene->addPhysics(mWorld);
 	
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
 
 	float lastFrame = getTimeSecs();
 	float startFrame = lastFrame;

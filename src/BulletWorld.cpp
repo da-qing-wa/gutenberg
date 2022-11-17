@@ -28,6 +28,11 @@ BulletWorld::~BulletWorld() {
     delete mCollisionConfiguration;
 }
 
+btDiscreteDynamicsWorld* BulletWorld::getDynamicsWorld()
+{
+    return mDynamicsWorld;
+}
+
 void BulletWorld::addRigidBody(btRigidBody *body)
 {
     mDynamicsWorld->addRigidBody(body);

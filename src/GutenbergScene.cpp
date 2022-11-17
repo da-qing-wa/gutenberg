@@ -1,4 +1,5 @@
 #include "GutenbergScene.h"
+#include<iostream>
 
 GutenbergScene::GutenbergScene()
 {
