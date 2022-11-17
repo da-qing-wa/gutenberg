@@ -29,6 +29,7 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     multilightShader->use(camera.Position, camera.Front);
 	multilightShader->getShader()->setMat4("projection", projection);
 	multilightShader->getShader()->setMat4("view", camera.GetViewMatrix());
+    //ground->draw();
     ground->draw();
     neck_walker->draw();
     
