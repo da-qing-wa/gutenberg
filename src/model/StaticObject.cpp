@@ -24,12 +24,6 @@ StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, co
     }
     btScalar* btScalarBuf = new btScalar[vertices_num * 9 * sizeof(float)];
 
-    //btVector3* gVertices = new btVector3[totalVerts];
-    //int* gIndices = new int[totalTriangles * 3];
-
-    //Meshes_to_GLInstanceVertexBuff(objModel.meshes, btScalarBuf);
-
-
     printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objDir.c_str());
 
     // generate collision shape
