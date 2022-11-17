@@ -11,7 +11,7 @@ static glm::mat4 btScalar16_to_mat4(btScalar transform[16])
     return model;
 }
 
-void Meshes_to_GLInstanceVertexBuff(vector<Mesh>& meshes, btScalar* btScalarBuf)
+static void Meshes_to_GLInstanceVertexBuff(vector<Mesh>& meshes, btScalar* btScalarBuf)
 {
     int p_buf = 0;
     for (int i = 0; i < meshes.size(); i++)
@@ -32,7 +32,7 @@ void Meshes_to_GLInstanceVertexBuff(vector<Mesh>& meshes, btScalar* btScalarBuf)
     }
 }
 
-MovingObject::MovingObject(string objName, btScalar mass, Shader& shader, btVector3 scaling, const btVector3& initLoc)
+MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVector3 scaling, const btVector3& initLoc)
 {
     btTransform transform;
     transform.setIdentity();
@@ -58,12 +58,13 @@ MovingObject::MovingObject(string objName, btScalar mass, Shader& shader, btVect
     // generate collision shape
     btConvexHullShape* shape = new btConvexHullShape(btScalarBuf, vertices_num, 9 * sizeof(float));
 
+
     // set scaling
     shape->setLocalScaling(objScaling);
 
+    shape->optimizeConvexHull();
     if (mass > 1e-5)
         shape->calculateLocalInertia(mass, localInertia);
-    
     btDefaultMotionState *mMotionState = new btDefaultMotionState(transform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, mMotionState, shape, localInertia);
     mBody = new btRigidBody(rbInfo);
@@ -86,9 +87,8 @@ void MovingObject::draw()
     btScalar buf[16];
     mWorldTrans.getOpenGLMatrix(buf);
     // render the loaded model
-    objShader.use();
     glm::mat4 model = btScalar16_to_mat4(buf);
     model = glm::scale(model, glm::vec3(objScaling[0], objScaling[1], objScaling[2]));
-    objShader.setMat4("model", model);
+    objShader->setMat4("model", model);
     objModel.Draw(objShader);
 }

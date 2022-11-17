@@ -37,8 +37,3 @@ void BulletWorld::step(float dt)
 {
     mDynamicsWorld->stepSimulation(dt);
 }
-
-btClock& BulletWorld::getClock()
-{
-    return mClock;
-}

@@ -9,6 +9,7 @@ find_package(glm REQUIRED)
 
 add_subdirectory(model)
 add_subdirectory(learnopengl)
+add_subdirectory(shader)
 
 file(GLOB SRCFILES *.cpp)
 set(SRCFILES
@@ -23,6 +24,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_INCLUDE_DIR})
 target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_DEFINITIONS})
 target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC ${Bullet_DIR}/${BULLET_ROOT_DIR}/${BULLET_LIBRARY_DIRS})
 target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC 
-	model learnopengl
+	model shader learnopengl 
 	BulletDynamics BulletCollision LinearMath assimp
 	GL glfw ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY} ${CMAKE_DL_LIBS})

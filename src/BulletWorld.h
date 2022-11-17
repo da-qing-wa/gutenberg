@@ -10,16 +10,14 @@ protected:
     btBroadphaseInterface* mOverlappingPairCache;
     btSequentialImpulseConstraintSolver* mSolver;
     btDiscreteDynamicsWorld* mDynamicsWorld;
-    btClock mClock;
+
 public:
     BulletWorld();
     virtual ~BulletWorld();
 
     virtual void addRigidBody(btRigidBody *body);
     virtual void step(float dt);
-    btClock& getClock();
 
 };
-
 
 #endif /* _BULLET_WORLD_H */
