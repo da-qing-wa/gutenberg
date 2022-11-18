@@ -115,7 +115,6 @@ int main(int argc, char* argv[])
 		mScene->moveStatic(currentFrame - startFrame);
 
 		mWorld->step(currentFrame - lastFrame);
-		lastFrame = currentFrame;
 
 		// update the camera
 		//UpdateCamera();
@@ -127,6 +126,8 @@ int main(int argc, char* argv[])
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		lastFrame = currentFrame;
 	}
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.

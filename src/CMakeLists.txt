@@ -20,9 +20,9 @@ set(SRCFILES
 
 add_executable(${CMAKE_PROJECT_NAME} ${SRCFILES})
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_INCLUDE_DIR})
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_INCLUDE_DIRS})
 target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_DEFINITIONS})
-target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC ${Bullet_DIR}/${BULLET_ROOT_DIR}/${BULLET_LIBRARY_DIRS})
+target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_LIBRARY_DIRS})
 target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC 
 	model shader learnopengl 
 	BulletDynamics BulletCollision LinearMath assimp
