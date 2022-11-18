@@ -39,7 +39,7 @@ void GutenbergScene::moveStatic(float time)
     trans.setIdentity();
     trans.setOrigin(concav_ground->getOriginalLocation());
     trans.getOpenGLMatrix(buf);
-    model = glm::rotate(glm::make_mat4(buf), glm::radians(12 * time), AXIS_Y);
+    model = glm::rotate(glm::make_mat4(buf), glm::radians(30 * time), AXIS_Y);
     trans.setFromOpenGLMatrix(glm::value_ptr(model));
     concav_ground->getBody()->getMotionState()->setWorldTransform(trans);
     concav_ground->getBody()->setWorldTransform(trans);

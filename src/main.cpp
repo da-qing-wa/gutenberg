@@ -1,16 +1,29 @@
 #include <iostream>
+#include <iomanip>
+#include <string>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <ctime>
+#include <memory>
 #ifdef __linux__
+#include <sys/stat.h>
 #include <sys/time.h>
 #endif
 
 #include "BulletWorld.h"
 #include "GutenbergScene.h"
 #include "learnopengl/camera.h"
+
+// #define OFFLINE_RENDERING
+
+#ifdef OFFLINE_RENDERING
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+#include <pthread.h>
+#endif
 
 // settings
 const unsigned int SCR_WIDTH = 1600;
@@ -22,6 +35,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+#ifndef OFFLINE_RENDERING
 float getTimeSecs()
 {
 #ifdef __linux__
@@ -39,7 +53,27 @@ float getTimeSecs()
 	return (float)glfwGetTime();
 #endif 
 }
+#endif
 
+#ifdef OFFLINE_RENDERING
+struct saveFrameData
+{
+	const GLsizei bufSize = 3 * SCR_WIDTH * SCR_HEIGHT;
+	std::vector<char> buffer = std::vector<char>(bufSize);
+	std::string fname;
+};
+
+void* saveFrameTask(void* arg)
+{
+	saveFrameData *targ = (saveFrameData*)arg;
+
+	stbi_flip_vertically_on_write(true);
+	stbi_write_png(targ->fname.c_str(), SCR_WIDTH, SCR_HEIGHT, 3, targ->buffer.data(), 3 * SCR_WIDTH);
+
+	delete targ;
+	return 0;
+}
+#endif
 
 void UpdateCamera() 
 {
@@ -102,7 +136,7 @@ int main(int argc, char* argv[])
 	
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
-
+#ifndef OFFLINE_RENDERING
 	float lastFrame = getTimeSecs();
 	float startFrame = lastFrame;
 	while (!glfwWindowShouldClose(window))
@@ -129,6 +163,85 @@ int main(int argc, char* argv[])
 
 		lastFrame = currentFrame;
 	}
+#else
+
+#define FRAMERATE 60
+
+	const float totalLength = 10.0f;
+	const float dt = 1.0f / (FRAMERATE);
+	const int frameCount = (int)(totalLength / dt) + 1;
+	
+	std::string path("./frames/");
+	std::time_t ptime = std::time(nullptr);
+#ifdef __linux__
+	std::string ptimestr = std::to_string(ptime);
+	int direrr = mkdir(ptimestr.c_str(), 0777);
+	if (direrr == 0)
+		path = "./" + ptimestr + '/';
+#endif
+
+#define THREAD_CNT 32
+	pthread_t ths[THREAD_CNT] {};
+
+	for (int i=0; i<frameCount; i++) {
+		float t = i * dt;
+
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		mScene->moveStatic(t);
+
+		if (i > 0)
+			mWorld->step(dt);
+
+		// update the camera
+		//UpdateCamera();
+
+		// render the scene
+		mScene->render(projection, camera);
+
+		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+		// -------------------------------------------------------------------------------
+		glfwSwapBuffers(window);
+		saveFrameData *dat = new saveFrameData();
+		glPixelStorei(GL_PACK_ALIGNMENT, 4);
+		glReadBuffer(GL_FRONT);
+		glReadPixels(0, 0, SCR_WIDTH, SCR_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, dat->buffer.data());
+		int tid = (i % THREAD_CNT);
+		if (ths[tid] != 0) {
+			pthread_join(ths[tid], NULL);
+		}
+		std::stringstream fname;
+		fname << path << std::setw(5) << std::setfill('0') << i << ".png";
+		dat->fname = fname.str();
+		pthread_create(&(ths[tid]), NULL, saveFrameTask, dat);
+		std::cout << i << '/' << frameCount << std::endl;
+	}
+
+	for (int tid=0; tid<THREAD_CNT; tid++)
+		if (ths[tid] != 0) {
+			pthread_join(ths[tid], NULL);
+		}
+
+	std::cout << "Generating MP4..." << std::endl;
+    std::array<char, 128> buffer;
+    std::string result;
+	char cmd[128] {};
+	sprintf(cmd, "ffmpeg -framerate %d -pattern_type glob -i '%s*.png' %ld.mp4",
+		FRAMERATE, path.c_str(), ptime);
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+	std::cout << result << std::endl;
+	std::cout << "Generate MP4 DONE" << std::endl;
+
+	// ffmpeg -framerate 10 -pattern_type glob -i './frames/*.png' out.mp4
+
+#endif
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------

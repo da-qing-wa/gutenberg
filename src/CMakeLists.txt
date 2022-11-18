@@ -25,5 +25,5 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_DEFINITIONS})
 target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC ${BULLET_LIBRARY_DIRS})
 target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC 
 	model shader learnopengl 
-	BulletDynamics BulletCollision LinearMath assimp
+	BulletDynamics BulletCollision LinearMath assimp pthread
 	GL glfw ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY} ${CMAKE_DL_LIBS})
