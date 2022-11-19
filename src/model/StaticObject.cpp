@@ -3,8 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-
-StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, const btVector3& initLoc, btScalar friction)
+StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, const btVector3& initLoc, btScalar friction, int shapeType)
 {
     btTransform transform;
     transform.setIdentity();
@@ -28,29 +27,54 @@ StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, co
     printf("[INFO] Obj loaded: Extracted %d verticed from obj file [%s]\n", vertices_num, objDir.c_str());
 
     // generate collision shape
-    btCompoundShape* shape = new btCompoundShape();
+    btCollisionShape* shape = 0;
 
-    btTransform trans;
-    trans.setIdentity();
-    for (int i = 0; i < objModel.meshes.size(); i++)
+    if (shapeType == BOX_SHAPE_PROXYTYPE)
     {
+        btScalar minX = 1e9, minY = 1e9, minZ = 1e9;
+        btScalar maxX = -1e9, maxY = -1e9, maxZ = -1e9;
+        for (const Vertex &vt : objModel.meshes[0].vertices) {
+            minX = glm::min(minX, vt.Position.x);
+            minY = glm::min(minY, vt.Position.y);
+            minZ = glm::min(minZ, vt.Position.z);
+            maxX = glm::max(maxX, vt.Position.x);
+            maxY = glm::max(maxY, vt.Position.y);
+            maxZ = glm::max(maxZ, vt.Position.z);
+        }
+        btBoxShape *boxshape = new btBoxShape(btVector3(
+            (maxX-minX) * objScaling[0] / 2, 
+            (maxY-minY) * objScaling[1] / 2, 
+            (maxZ-minZ) * objScaling[2] / 2
+        ));
+        // boxshape->setLocalScaling(objScaling);
+        shape = boxshape;
+    } 
+    else 
+    {
+        btCompoundShape* compshape = new btCompoundShape();
 
-        btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(
-            objModel.meshes[i].indices.size() / 3,
-            (int*)objModel.meshes[i].indices.data(),
-            3 * sizeof(int),
-            objModel.meshes[i].vertices.size(),
-            (btScalar*)(glm::value_ptr(objModel.meshes[i].vertices[0].Position)),
-            sizeof(Vertex)
-        );
+        btTransform trans;
+        trans.setIdentity();
+        for (int i = 0; i < objModel.meshes.size(); i++)
+        {
 
-        btBvhTriangleMeshShape* tri_mesh_shape = new btBvhTriangleMeshShape(m_indexVertexArrays, true);
-        tri_mesh_shape->buildOptimizedBvh();
-        tri_mesh_shape->recalcLocalAabb();
-        shape->addChildShape(trans, tri_mesh_shape);
+            btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(
+                objModel.meshes[i].indices.size() / 3,
+                (int*)objModel.meshes[i].indices.data(),
+                3 * sizeof(int),
+                objModel.meshes[i].vertices.size(),
+                (btScalar*)(glm::value_ptr(objModel.meshes[i].vertices[0].Position)),
+                sizeof(Vertex)
+            );
+
+            btBvhTriangleMeshShape* tri_mesh_shape = new btBvhTriangleMeshShape(m_indexVertexArrays, true);
+            tri_mesh_shape->buildOptimizedBvh();
+            tri_mesh_shape->recalcLocalAabb();
+            compshape->addChildShape(trans, tri_mesh_shape);
+        }
+        compshape->setLocalScaling(objScaling);
+        shape = compshape;
     }
-
-    shape->setLocalScaling(objScaling);
     btDefaultMotionState* mMotionState = new btDefaultMotionState(transform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(0, mMotionState, shape, localInertia);
     rbInfo.m_friction = friction;

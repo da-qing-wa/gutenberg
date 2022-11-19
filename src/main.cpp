@@ -167,7 +167,7 @@ int main(int argc, char* argv[])
 
 #define FRAMERATE 60
 
-	const float totalLength = 10.0f;
+	const float totalLength = 30.0f;
 	const float dt = 1.0f / (FRAMERATE);
 	const int frameCount = (int)(totalLength / dt) + 1;
 	
@@ -203,6 +203,7 @@ int main(int argc, char* argv[])
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
+		glfwPollEvents();
 		saveFrameData *dat = new saveFrameData();
 		glPixelStorei(GL_PACK_ALIGNMENT, 4);
 		glReadBuffer(GL_FRONT);
@@ -214,7 +215,7 @@ int main(int argc, char* argv[])
 		std::stringstream fname;
 		fname << path << std::setw(5) << std::setfill('0') << i << ".png";
 		dat->fname = fname.str();
-		pthread_create(&(ths[tid]), NULL, saveFrameTask, dat);
+		// pthread_create(&(ths[tid]), NULL, saveFrameTask, dat);
 		std::cout << i << '/' << frameCount << std::endl;
 	}
 
@@ -227,7 +228,7 @@ int main(int argc, char* argv[])
     std::array<char, 128> buffer;
     std::string result;
 	char cmd[128] {};
-	sprintf(cmd, "ffmpeg -framerate %d -pattern_type glob -i '%s*.png' %ld.mp4",
+	sprintf(cmd, "ffmpeg -framerate %d -pattern_type glob -i '%s*.png' -c:v libx264 -pix_fmt yuv420p %ld.mp4",
 		FRAMERATE, path.c_str(), ptime);
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
     if (!pipe) {

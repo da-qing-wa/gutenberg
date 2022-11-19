@@ -13,9 +13,13 @@ protected:
     MultiLightShader *multilightShader;
 
     // objects
-    //MovingObject *ground;
-    StaticObject *concav_ground;
-    MovingObject *neck_walker;
+    StaticObject *ground;
+
+    MovingObject *dom1;
+    MovingObject *dom2;
+    MovingObject *dom3;
+    MovingObject *dom4;
+    MovingObject *dom5;
 
 public:
     GutenbergScene();
