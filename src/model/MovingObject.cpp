@@ -29,7 +29,17 @@ MovingObject::MovingObject(string objName, btScalar mass, Shader *shader, btVect
     // generate collision shape
     if (shapeType == SPHERE_SHAPE_PROXYTYPE)
     {
-        shape = new btSphereShape(scaling[0]);
+        btScalar minX = 1e9, minY = 1e9, minZ = 1e9;
+        btScalar maxX = -1e9, maxY = -1e9, maxZ = -1e9;
+        for (const Vertex &vt : objModel.meshes[0].vertices) {
+            minX = glm::min(minX, vt.Position.x);
+            minY = glm::min(minY, vt.Position.y);
+            minZ = glm::min(minZ, vt.Position.z);
+            maxX = glm::max(maxX, vt.Position.x);
+            maxY = glm::max(maxY, vt.Position.y);
+            maxZ = glm::max(maxZ, vt.Position.z);
+        }
+        shape = new btSphereShape((maxX - minX) * objScaling[0] / 2);
 
     }
     else if (shapeType == COMPOUND_SHAPE_PROXYTYPE)

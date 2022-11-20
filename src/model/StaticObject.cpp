@@ -67,12 +67,13 @@ StaticObject::StaticObject(string objName, Shader* shader, btVector3 scaling, co
                 sizeof(Vertex)
             );
 
-            btBvhTriangleMeshShape* tri_mesh_shape = new btBvhTriangleMeshShape(m_indexVertexArrays, true);
-            tri_mesh_shape->buildOptimizedBvh();
-            tri_mesh_shape->recalcLocalAabb();
+            btBvhTriangleMeshShape* tri_mesh_shape = new btBvhTriangleMeshShape(m_indexVertexArrays, false);
+            tri_mesh_shape->setLocalScaling(objScaling);
+            // tri_mesh_shape->buildOptimizedBvh();
+            // tri_mesh_shape->recalcLocalAabb();
             compshape->addChildShape(trans, tri_mesh_shape);
         }
-        compshape->setLocalScaling(objScaling);
+        // compshape->setLocalScaling(objScaling);
         shape = compshape;
     }
     btDefaultMotionState* mMotionState = new btDefaultMotionState(transform);

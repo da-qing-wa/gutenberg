@@ -1,4 +1,4 @@
-# Blender 3.3.1 MTL File: '双轨管道.blend'
+# Blender 3.3.1 MTL File: '双轨管道包含曲线.blend'
 # www.blender.org
 
 newmtl 材质
@@ -49,7 +49,7 @@ map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
 map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
 map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
 
-newmtl 材质.015
+newmtl 材质.004
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -61,7 +61,7 @@ map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
 map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
 map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
 
-newmtl 材质.016
+newmtl 材质.005
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000

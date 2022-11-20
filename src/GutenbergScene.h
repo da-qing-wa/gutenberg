@@ -14,7 +14,10 @@ protected:
 
     // objects
     StaticObject *ground;
+    StaticObject *rail;
 
+    MovingObject *ball;
+    
     MovingObject *dom1;
     MovingObject *dom2;
     MovingObject *dom3;

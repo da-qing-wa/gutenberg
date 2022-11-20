@@ -28,7 +28,7 @@
 // settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
-Camera camera(glm::vec3(-4.0f, 2.0f, 4.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW + 45, PITCH - 10);
+Camera camera(glm::vec3(-8.0f, 2.0f, 8.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW + 45, PITCH - 10);
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -68,7 +68,7 @@ void* saveFrameTask(void* arg)
 	saveFrameData *targ = (saveFrameData*)arg;
 
 	stbi_flip_vertically_on_write(true);
-	stbi_write_png(targ->fname.c_str(), SCR_WIDTH, SCR_HEIGHT, 3, targ->buffer.data(), 3 * SCR_WIDTH);
+	stbi_write_jpg(targ->fname.c_str(), SCR_WIDTH, SCR_HEIGHT, 3, targ->buffer.data(), 3 * SCR_WIDTH);
 
 	delete targ;
 	return 0;
@@ -167,7 +167,7 @@ int main(int argc, char* argv[])
 
 #define FRAMERATE 60
 
-	const float totalLength = 30.0f;
+	const float totalLength = 15.0f;
 	const float dt = 1.0f / (FRAMERATE);
 	const int frameCount = (int)(totalLength / dt) + 1;
 	
@@ -213,9 +213,9 @@ int main(int argc, char* argv[])
 			pthread_join(ths[tid], NULL);
 		}
 		std::stringstream fname;
-		fname << path << std::setw(5) << std::setfill('0') << i << ".png";
+		fname << path << std::setw(5) << std::setfill('0') << i << ".jpg";
 		dat->fname = fname.str();
-		// pthread_create(&(ths[tid]), NULL, saveFrameTask, dat);
+		pthread_create(&(ths[tid]), NULL, saveFrameTask, dat);
 		std::cout << i << '/' << frameCount << std::endl;
 	}
 
@@ -228,7 +228,7 @@ int main(int argc, char* argv[])
     std::array<char, 128> buffer;
     std::string result;
 	char cmd[128] {};
-	sprintf(cmd, "ffmpeg -framerate %d -pattern_type glob -i '%s*.png' -c:v libx264 -pix_fmt yuv420p %ld.mp4",
+	sprintf(cmd, "ffmpeg -framerate %d -pattern_type glob -i '%s*.jpg' -c:v libx264 -pix_fmt yuv420p %ld.mp4",
 		FRAMERATE, path.c_str(), ptime);
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
     if (!pipe) {
@@ -240,7 +240,7 @@ int main(int argc, char* argv[])
 	std::cout << result << std::endl;
 	std::cout << "Generate MP4 DONE" << std::endl;
 
-	// ffmpeg -framerate 10 -pattern_type glob -i './frames/*.png' out.mp4
+	// ffmpeg -framerate 10 -pattern_type glob -i './frames/*.jpg' out.mp4
 
 #endif
 
