@@ -28,7 +28,7 @@
 // settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
-Camera camera(glm::vec3(-8.0f, 2.0f, 8.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW + 45, PITCH - 10);
+Camera camera(glm::vec3(0.0f, 500.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), YAW + 0, PITCH - 90);
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
 	GutenbergScene *mScene = new GutenbergScene();
 	mScene->addPhysics(mWorld);
 	
-	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 10000.0f);
 
 #ifndef OFFLINE_RENDERING
 	float lastFrame = getTimeSecs();

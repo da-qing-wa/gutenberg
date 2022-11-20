@@ -16,6 +16,13 @@ protected:
     StaticObject *ground;
     StaticObject *rail;
 
+    StaticObject *wm_blade;
+    StaticObject *wm_body;
+
+    StaticObject *try3;
+    StaticObject *try6;
+    StaticObject *try7;
+
     MovingObject *ball;
     
     MovingObject *dom1;

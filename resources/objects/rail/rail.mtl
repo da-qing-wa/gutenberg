@@ -1,4 +1,4 @@
-# Blender 3.3.1 MTL File: '双轨管道包含曲线.blend'
+# Blender 3.3.1 MTL File: 'All.blend'
 # www.blender.org
 
 newmtl 材质
@@ -8,10 +8,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
-map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
+map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_roughness.png
+map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_normal.png
 
 newmtl 材质.001
 Ka 1.000000 1.000000 1.000000
@@ -20,10 +20,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
-map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
+map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_roughness.png
+map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_normal.png
 
 newmtl 材质.002
 Ka 1.000000 1.000000 1.000000
@@ -32,10 +32,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
-map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
+map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_roughness.png
+map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_normal.png
 
 newmtl 材质.003
 Ka 1.000000 1.000000 1.000000
@@ -44,10 +44,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
-map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
+map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_roughness.png
+map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_normal.png
 
 newmtl 材质.004
 Ka 1.000000 1.000000 1.000000
@@ -56,10 +56,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
-map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
+map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_roughness.png
+map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_normal.png
 
 newmtl 材质.005
 Ka 1.000000 1.000000 1.000000
@@ -68,7 +68,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Ns TexturesCom_Metal_StainlessClean_1K_roughness.png
-map_refl TexturesCom_Metal_StainlessClean_1K_albedo.png
-map_Bump -bm 1.000000 TexturesCom_Metal_StainlessClean_1K_normal.png
+map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_roughness.png
+map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_albedo.png
+map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_StainlessClean_1K_normal.png
