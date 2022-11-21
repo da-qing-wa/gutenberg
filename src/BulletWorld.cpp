@@ -13,6 +13,7 @@ BulletWorld::BulletWorld() {
     );
 
     mDynamicsWorld->setGravity(btVector3(0, -9.8, 0));
+    //mDynamicsWorld->setGravity(btVector3(0, -9.8, 0));
 }
 
 BulletWorld::~BulletWorld() {

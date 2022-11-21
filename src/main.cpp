@@ -28,7 +28,7 @@
 // settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
-Camera camera(glm::vec3(0.0f, 500.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), YAW + 0, PITCH - 90);
+Camera camera(glm::vec3(0.0f, 500.0f, 800.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW - 15, PITCH-30);
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {

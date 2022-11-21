@@ -1,6 +1,6 @@
 # Blender 3.3.1
 # www.blender.org
-mtllib wm_body.mtl
+mtllib body.mtl
 o Cube_040
 v 117.273598 -16.627457 -119.218536
 v 118.421463 -21.482464 -103.138664

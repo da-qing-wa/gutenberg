@@ -8,7 +8,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_BronzePatina_1K_albedo.png
-map_Ns D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_BronzePatina_1K_roughness.png
-map_refl D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_BronzePatina_1K_albedo.png
-map_Bump -bm 1.000000 D:/BlenderProject/双轨管道+多米诺骨牌/TexturesCom_Metal_BronzePatina_1K_normal.png
+map_Kd ./TexturesCom_Metal_BronzePatina_1K_albedo.png
+map_Ns ./TexturesCom_Metal_BronzePatina_1K_roughness.png
+map_refl ./TexturesCom_Metal_BronzePatina_1K_albedo.png
+map_Bump -bm 1.000000 ./TexturesCom_Metal_BronzePatina_1K_normal.png

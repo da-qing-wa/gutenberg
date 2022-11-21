@@ -31,6 +31,16 @@ protected:
     MovingObject *dom4;
     MovingObject *dom5;
 
+    MovingObject* block1;
+    MovingObject* block2;
+    MovingObject* block3;
+    MovingObject* block4;
+    MovingObject* block5;
+    MovingObject* block6;
+    MovingObject* block7;
+    MovingObject* block8;
+    StaticObject* frame;
+
 public:
     GutenbergScene();
     ~GutenbergScene();
