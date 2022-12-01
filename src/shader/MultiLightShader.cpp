@@ -14,7 +14,7 @@ MultiLightShader::MultiLightShader() :
 	shader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 	// point light 1
 	shader.setVec3("pointLights[0].position", glm::vec3(1.0f, 0.3f, 0.0f));
-	shader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+	shader.setVec3("pointLights[0].ambient", 0.5f, 0.5f, 0.5f);
 	shader.setVec3("pointLights[0].diffuse", 1.0f, 0.0f, 0.0f);
 	shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
 	shader.setFloat("pointLights[0].constant", 1.0f);
@@ -22,7 +22,7 @@ MultiLightShader::MultiLightShader() :
 	shader.setFloat("pointLights[0].quadratic", 0.032f);
 	// point light 2
 	shader.setVec3("pointLights[1].position", glm::vec3(-1.0f, 0.3f, 0.0f));
-	shader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+	shader.setVec3("pointLights[1].ambient", 0.5f, 0.5f, 0.5f);
 	shader.setVec3("pointLights[1].diffuse", 0.0f, 1.0f, 0.0f);
 	shader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
 	shader.setFloat("pointLights[1].constant", 1.0f);
@@ -30,7 +30,7 @@ MultiLightShader::MultiLightShader() :
 	shader.setFloat("pointLights[1].quadratic", 0.032f);
 	// point light 3
 	shader.setVec3("pointLights[2].position", glm::vec3(0.0f, 0.3f, 1.0f));
-	shader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
+	shader.setVec3("pointLights[2].ambient", 0.5f, 0.5f, 0.5f);
 	shader.setVec3("pointLights[2].diffuse", 0.0f, 0.0f, 1.0f);
 	shader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
 	shader.setFloat("pointLights[2].constant", 1.0f);
@@ -38,7 +38,7 @@ MultiLightShader::MultiLightShader() :
 	shader.setFloat("pointLights[2].quadratic", 0.032f);
 	// point light 4
 	shader.setVec3("pointLights[3].position", glm::vec3(0.0f, 0.3f, -1.0f));
-	shader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
+	shader.setVec3("pointLights[3].ambient", 0.5f, 0.5f, 0.5f);
 	shader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
 	shader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
 	shader.setFloat("pointLights[3].constant", 1.0f);

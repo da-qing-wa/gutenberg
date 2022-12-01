@@ -5,12 +5,14 @@
 #include "model/MovingObject.h"
 #include "model/StaticObject.h"
 #include "shader/MultiLightShader.h"
+#include "shader/SkyboxShader.h"
 #include "learnopengl/camera.h"
 
 class GutenbergScene {
 protected:
     // shaders
     MultiLightShader *multilightShader;
+    SkyboxShader * skyboxShader;
 
     // objects
     StaticObject *ground;
@@ -30,6 +32,8 @@ protected:
     MovingObject *dom3;
     MovingObject *dom4;
     MovingObject *dom5;
+
+    MovingObject *ball2;
 
     MovingObject* block1;
     MovingObject* block2;

@@ -63,6 +63,12 @@
     <ClCompile Include="src\learnopengl\mesh.cpp">
       <Filter>源文件\learnopengl</Filter>
     </ClCompile>
+    <ClCompile Include="src\shader\SkyboxShader.cpp">
+      <Filter>源文件\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\learnopengl\stb_image.cpp">
+      <Filter>源文件\learnopengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BulletWorld.h">
@@ -91,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="src\shader\MultiLightShader.h">
       <Filter>头文件\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shader\SkyboxShader.h">
+      <Filter>头文件\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\learnopengl\stb_image.h">
+      <Filter>头文件\learnopengl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

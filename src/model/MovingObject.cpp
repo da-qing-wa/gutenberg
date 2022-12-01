@@ -101,6 +101,7 @@ btRigidBody* MovingObject::getBody()
 
 void MovingObject::draw()
 {
+    
     mBody->getMotionState()->getWorldTransform(mWorldTrans);
     btScalar buf[16];
     mWorldTrans.getOpenGLMatrix(buf);
