@@ -13,6 +13,7 @@ map_Ns ./TexturesCom_Metal_StainlessClean_1K_roughness.png
 map_refl ./TexturesCom_Metal_StainlessClean_1K_albedo.png
 map_Bump -bm 1.000000 ./TexturesCom_Metal_StainlessClean_1K_normal.png
 
+
 newmtl 材质.001
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000

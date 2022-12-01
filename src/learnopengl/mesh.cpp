@@ -13,38 +13,84 @@ Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture
 void Mesh::Draw(Shader *shader)
 {
     // bind appropriate textures
-    unsigned int diffuseNr = 0;
-    unsigned int specularNr = 0;
+    //unsigned int diffuseNr = 0;
+    //unsigned int specularNr = 0;
+    //unsigned int normalNr = 0;
+    //unsigned int heightNr = 0;
+    //for (unsigned int i = 0; i < textures.size(); i++)
+    //{
+    //    bool skip = true;
+    //    string name = textures[i].type;
+    //    if (name == "texture_diffuse" && !diffuseNr)
+    //    {
+    //        skip = false;
+    //        diffuseNr = 1;
+    //    }
+    //    else if (name == "texture_specular" && !specularNr)
+    //    {
+    //        skip = false;
+    //        specularNr = 1;
+    //    }
+    //    else if (name == "texture_normal" && !normalNr)
+    //    {
+    //        skip = false;
+    //        normalNr = 1;
+    //    }
+    //    else if (name == "texture_height" && !heightNr)
+    //    {
+    //        skip = false;
+    //        heightNr = 1;
+    //    }
+
+    //    if (!skip)
+    //    {
+    //        glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
+    //        // now set the sampler to the correct texture unit
+    //        glUniform1i(glGetUniformLocation(shader->ID, name.c_str()), i);
+    //        // and finally bind the texture
+    //        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+    //    }
+    //}
+
+    unsigned int albedoNr = 0;
     unsigned int normalNr = 0;
-    unsigned int heightNr = 0;
+    unsigned int metallicNr = 0;
+    unsigned int roughnessNr = 0;
+    unsigned int aoNr = 0;
     for (unsigned int i = 0; i < textures.size(); i++)
     {
         bool skip = true;
         string name = textures[i].type;
-        if (name == "texture_diffuse" && !diffuseNr)
+        if (name == "texture_albedo" && !albedoNr)
         {
             skip = false;
-            diffuseNr = 1;
-        }
-        else if (name == "texture_specular" && !specularNr)
-        {
-            skip = false;
-            specularNr = 1;
+            albedoNr = 1;
         }
         else if (name == "texture_normal" && !normalNr)
         {
             skip = false;
             normalNr = 1;
         }
-        else if (name == "texture_height" && !heightNr)
+        else if (name == "texture_metallic" && !metallicNr)
         {
             skip = false;
-            heightNr = 1;
+            metallicNr = 1;
+        }
+        else if (name == "texture_roughness" && !roughnessNr)
+        {
+            skip = false;
+            roughnessNr = 1;
+        }
+        else if (name == "texture_ao" && !aoNr)
+        {
+            skip = false;
+            aoNr = 1;
         }
 
         if (!skip)
         {
-            glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
+            //glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
+            glActiveTexture(GL_TEXTURE3 + i); // active proper texture unit before binding
             // now set the sampler to the correct texture unit
             glUniform1i(glGetUniformLocation(shader->ID, name.c_str()), i);
             // and finally bind the texture

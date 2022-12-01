@@ -50,6 +50,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset); 
 void processInput(GLFWwindow* window);
 
+
+
 #ifndef OFFLINE_RENDERING
 float getTimeSecs()
 {
@@ -187,6 +189,10 @@ int main(int argc, char* argv[])
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 	glEnable(GL_DEPTH_TEST);
+	// set depth function to less than AND equal for skybox depth trick.
+	glDepthFunc(GL_LEQUAL);
+	// enable seamless cubemap sampling for lower mip levels in the pre-filter map.
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
 	BulletWorld *mWorld = new BulletWorld();
 
@@ -195,6 +201,19 @@ int main(int argc, char* argv[])
 	
 	glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 10000.0f);
 	glm::mat4 view = camera.GetViewMatrix();
+
+	// initialize static shader uniforms before rendering
+// --------------------------------------------------
+//projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	mScene->pbrShader->use();
+	mScene->pbrShader->setMat4("projection", projection);
+	mScene->backgroundShader->use();
+	mScene->backgroundShader->setMat4("projection", projection);
+
+	// then before rendering, configure the viewport to the original framebuffer's screen dimensions
+	int scrWidth, scrHeight;
+	glfwGetFramebufferSize(window, &scrWidth, &scrHeight);
+	glViewport(0, 0, scrWidth, scrHeight);
 
 
 #ifndef OFFLINE_RENDERING
@@ -224,6 +243,8 @@ int main(int argc, char* argv[])
 
 		// render the scene
 		mScene->render(projection, camera);
+
+
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -375,3 +396,4 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
+
