@@ -15,4 +15,3 @@ map_Bump normal.png
 map_Ks metallic.png
 map_Ns roughness.png
 map_Ka ao.png
-refl metallic.png

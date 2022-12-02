@@ -51,6 +51,14 @@ protected:
     MovingObject* block6;
     MovingObject* block7;
     MovingObject* block8;
+    //StaticObject* block1;
+    //StaticObject* block2;
+    //StaticObject* block3;
+    //StaticObject* block4;
+    //StaticObject* block5;
+    //StaticObject* block6;
+    //StaticObject* block7;
+    //StaticObject* block8;
     StaticObject* frame;
 
     //// gold

@@ -10,3 +10,15 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+
+#map_Kd albedo.png
+#map_Ns roughness.png
+#map_Ka ao.png
+#map_Ks metallic.png
+#map_Bump normal.png
+
+map_Kd Rainbow_albedo.png
+map_Ns Rainbow_roughness.png
+map_Ka ao.png
+map_Ks Rainbow_metallic.png
+map_Bump Rainbow_normal.png
