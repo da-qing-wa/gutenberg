@@ -351,19 +351,19 @@ void GutenbergScene::moveStatic(float time)
     btTransform trans;
     float buf[16];
     glm::mat4 model;
-    printf("time:%f\n", time);
+    
     static bool exch = false;
-    if (time > 120.0f && !exch) {
+    if (ball->getBody()->getCenterOfMassTransform().getOrigin().getY() < 13.0f && !exch) {
+    //if (time > 120.0f && !exch) {
         exch = true;
          rail->getBody()->setFriction(0.0f);
-         ball->getBody()->setCollisionShape(new btSphereShape(8.5f));
+         ball->getBody()->setCollisionShape(new btSphereShape(8.32f));
          ball->getBody()->setFriction(0.0f);
-         ball2->getBody()->setCollisionShape(new btSphereShape(8.5f));
+         ball2->getBody()->setCollisionShape(new btSphereShape(8.32f));
          ball2->getBody()->setFriction(0.0f);
     }
 
     model = glm::mat4(1.0f);
-
     model = glm::translate(model, glm::vec3(wm_blade->getOriginalLocation().getX(), wm_blade->getOriginalLocation().getY(), wm_blade->getOriginalLocation().getZ()));
     model = glm::rotate(model, glm::radians(140.0f), AXIS_Z);
     if (time > 70.0f)
