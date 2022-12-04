@@ -47,7 +47,6 @@ GutenbergScene::GutenbergScene()
     stbi_set_flip_vertically_on_load(true);
     int width, height, nrComponents;
     float* data = stbi_loadf("resources/textures/hdr/Mt-Washington-Gold-Room_Ref.hdr", &width, &height, &nrComponents, 0);
-    //float* data = stbi_loadf("resources/textures/hdr/sunset.hdr", &width, &height, &nrComponents, 0);
     
     unsigned int hdrTexture;
     if (data)
@@ -255,17 +254,17 @@ GutenbergScene::GutenbergScene()
     try3 = new StaticObject("try3", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
     try6 = new StaticObject("try6", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
 
-    float block_friction = 50.1f;
-    block1 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 13.475, -10), block_friction);
-    block2 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 13.475, 0), block_friction);
-    block3 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 13.475, 10), block_friction);
-    block4 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 0, -10), block_friction);
-    block5 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 0, 0), block_friction);
-    block6 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 0, 10), block_friction);
-    block7 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, -13.475, -10), block_friction);
-    block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, -13.475, 0), block_friction);
-    block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, -13.475, 10), block_friction);
-    frame = new StaticObject("frame", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0,0,0), 5.5f);
+    float block_friction = 10.1f, block_width=1.0f;
+    block1 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 13.475, -10), block_friction);
+    block2 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 13.475, 0), block_friction);
+    block3 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 13.475, 10), block_friction);
+    block4 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 0, -10), block_friction);
+    block5 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 0, 0), block_friction);
+    block6 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 0, 10), block_friction);
+    block7 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, -13.475, -10), block_friction);
+    block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, -13.475, 0), block_friction);
+    block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, -13.475, 10), block_friction);
+
     desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
     clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
     lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
@@ -297,7 +296,6 @@ void GutenbergScene::addPhysics(BulletWorld *world)
     world->addRigidBody(block7->getBody());
     world->addRigidBody(block8->getBody());
     world->addRigidBody(block9->getBody());
-    world->addRigidBody(frame->getBody());
     world->addRigidBody(desk_lamp->getBody());
     world->addRigidBody(clock->getBody());
     world->addRigidBody(lime->getBody());
@@ -330,7 +328,6 @@ GutenbergScene::~GutenbergScene()
     delete block7;
     delete block8;
     delete block9;
-    delete frame;
     delete desk_lamp;
     delete clock;
     delete lime;
@@ -349,7 +346,6 @@ void GutenbergScene::moveStatic(float time)
     const glm::vec3 AXIS_Z = glm::vec3(0.0f, 0.0f, 1.0f);
 
     btTransform trans;
-    float buf[16];
     glm::mat4 model;
     
     static bool exch = false;
@@ -416,7 +412,6 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     block7->draw();
     block8->draw();
     block9->draw();
-    frame->draw();
     desk_lamp->draw();
     clock->draw();
     lime->draw();
@@ -427,7 +422,6 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     // keeps the codeprint small.
     for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
     {
-        //glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
         glm::vec3 newPos;
         newPos = lightPositions[i];
         pbrShader->setVec3("lightPositions[" + std::to_string(i) + "]", newPos);

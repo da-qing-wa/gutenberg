@@ -48,15 +48,6 @@ protected:
     MovingObject* block7;
     MovingObject* block8;
     MovingObject* block9;
-    //StaticObject* block1;
-    //StaticObject* block2;
-    //StaticObject* block3;
-    //StaticObject* block4;
-    //StaticObject* block5;
-    //StaticObject* block6;
-    //StaticObject* block7;
-    //StaticObject* block8;
-    StaticObject* frame;
     StaticObject* desk_lamp;
     StaticObject* clock;
     StaticObject* lime;
