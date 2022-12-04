@@ -1,0 +1,15 @@
+# Blender 3.3.1 MTL File: 'round_wooden_table_01_4k.blend'
+# www.blender.org
+
+newmtl round_wooden_table_01
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd albedo.png
+map_Ns roughness.png
+map_Ks metallic.png
+map_Ka ao.png
+map_Bump -bm 1.000000 normal.png

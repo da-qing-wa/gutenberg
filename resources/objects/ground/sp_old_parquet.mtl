@@ -1,0 +1,15 @@
+# Blender 3.3.1 MTL File: 'floor2.blend'
+# www.blender.org
+
+newmtl wire_057008136
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd ./old_parquet_obj/sp_wood_oak_1.jpg
+map_Ns ./old_parquet_obj/sp_wood_oak_mask1.jpg
+map_Ka ao.png
+map_Ks ./old_parquet_obj/sp_texture_mask2.jpg
+map_Bump normal.png

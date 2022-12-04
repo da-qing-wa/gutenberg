@@ -234,46 +234,42 @@ GutenbergScene::GutenbergScene()
 
     // precious BALL
     btScalar ball_rad = 8.32f;
-    //btScalar ball_rad = 6.83f;
     ball = new MovingObject("ball", 8.0, pbrShader, btVector3(ball_rad / 2.54, ball_rad / 2.54, ball_rad / 2.54), btVector3(-15, 137.0, -135.0), 0.18f);
 
     // objects
-    ground = new StaticObject("ground", pbrShader, btVector3(2.0, 0.1, 2.0), btVector3(0, -23.1, 0), 0.5f, BOX_SHAPE_PROXYTYPE);
+    rounddesk = new StaticObject("rounddesk", pbrShader, btVector3(1, 1, 1), btVector3(-100, -474.3, 0), 0.5f);
+    ground = new StaticObject("ground", pbrShader, btVector3(2.0, 0.1, 2.0), btVector3(-100, -23.1, 0), 0.5f, BOX_SHAPE_PROXYTYPE);
 
     try7 = new StaticObject("try7", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-28, 0, 0), 0.3f);
     wm_blade = new StaticObject("wm_blade", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(95.74, 46.81, -136.0), 0.3f);
-    wm_body = new StaticObject("wm_body", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-5, 0, -50), 0.3f);
+    wm_body = new StaticObject("wm_body", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-11.2, 0, -40), 0.3f);
     rail = new StaticObject("rail", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(8, 7, 0), 0.3f);
 
     dom1 = new MovingObject("dom1", 10.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-108.33, -10.395, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
-    dom2 = new MovingObject("dom2", 10.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-123.87, -7.2869, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
-    dom3 = new MovingObject("dom3", 10.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-139.41, -4.7189, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
-    dom4 = new MovingObject("dom4", 10.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-154.95, -1.0708, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
-    dom5 = new MovingObject("dom5", 10.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-170.49, 2.3072, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
+    dom2 = new MovingObject("dom2", 20.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-123.87, -7.2869, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
+    dom3 = new MovingObject("dom3", 30.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-139.41, -4.7189, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
+    dom4 = new MovingObject("dom4", 40.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-154.95, -1.0708, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
+    dom5 = new MovingObject("dom5", 50.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-170.49, 2.3072, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
 
-    ball2 = new MovingObject("ball", 20.0, pbrShader, btVector3(ball_rad / 2.54, ball_rad / 2.54, ball_rad / 2.54), btVector3(-190.0, 30.28, -0.0), 0.001f);
+    ball2 = new MovingObject("ball2", 30.0, pbrShader, btVector3(ball_rad / 2.54, ball_rad / 2.54, ball_rad / 2.54), btVector3(-190.0, 30.28, -0.0), 0.001f);
     try3 = new StaticObject("try3", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
     try6 = new StaticObject("try6", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
 
-    float block_friction = 1.5f;
-    block1 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, 4.9853, 5.4691), block_friction);
-    block2 = new MovingObject("block2", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, 6.5794, 0.40468), block_friction);
-    block3 = new MovingObject("block3", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, -4.4343, 6.3082), block_friction);
-    block4 = new MovingObject("block4", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, 4.9853, -4.862), block_friction);
-    block5 = new MovingObject("block5", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, -4.4343, -5.4988), block_friction);
-    block6 = new MovingObject("block6", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, -14.289, 5.4691), block_friction);
-    block7 = new MovingObject("block7", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, -15.448, 0.40468), block_friction);
-    block8 = new MovingObject("block8", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5-0.1, -14.289, -4.862), block_friction);
-    //block1 = new StaticObject("block1",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, 4.9853, 5.4691), block_friction);
-    //block2 = new StaticObject("block2",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, 6.5794, 0.40468), block_friction);
-    //block3 = new StaticObject("block3",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, -4.4343, 6.3082), block_friction);
-    //block4 = new StaticObject("block4",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, 4.9853, -4.862), block_friction);
-    //block5 = new StaticObject("block5",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, -4.4343, -5.4988), block_friction);
-    //block6 = new StaticObject("block6",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, -14.289, 5.4691), block_friction);
-    //block7 = new StaticObject("block7",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, -15.448, 0.40468), block_friction);
-    //block8 = new StaticObject("block8",  pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-347.59 + 5, -14.289, -4.862), block_friction);
-    frame = new StaticObject("frame", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(5-0.1,0,0), 0.5f);
-    //frame = new StaticObject("frame", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-353.057, -3.8399, 27.755), 0.5f);
+    float block_friction = 50.1f;
+    block1 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 13.475, -10), block_friction);
+    block2 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 13.475, 0), block_friction);
+    block3 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 13.475, 10), block_friction);
+    block4 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 0, -10), block_friction);
+    block5 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 0, 0), block_friction);
+    block6 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, 0, 10), block_friction);
+    block7 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, -13.475, -10), block_friction);
+    block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, -13.475, 0), block_friction);
+    block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-348, -13.475, 10), block_friction);
+    frame = new StaticObject("frame", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0,0,0), 5.5f);
+    desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
+    clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    potted_plant = new StaticObject("potted_plant", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
 }
 
 void GutenbergScene::addPhysics(BulletWorld *world)
@@ -300,13 +296,19 @@ void GutenbergScene::addPhysics(BulletWorld *world)
     world->addRigidBody(block6->getBody());
     world->addRigidBody(block7->getBody());
     world->addRigidBody(block8->getBody());
+    world->addRigidBody(block9->getBody());
     world->addRigidBody(frame->getBody());
+    world->addRigidBody(desk_lamp->getBody());
+    world->addRigidBody(clock->getBody());
+    world->addRigidBody(lime->getBody());
+    world->addRigidBody(potted_plant->getBody());
 }
 
 GutenbergScene::~GutenbergScene()
 {
     delete ball;
     delete ground;
+    delete rounddesk;
     delete try7;
     delete wm_blade;
     delete wm_body;
@@ -327,7 +329,12 @@ GutenbergScene::~GutenbergScene()
     delete block6;
     delete block7;
     delete block8;
+    delete block9;
     delete frame;
+    delete desk_lamp;
+    delete clock;
+    delete lime;
+    delete potted_plant;
 
     delete pbrShader;
     delete equirectangularToCubemapShader;
@@ -346,7 +353,7 @@ void GutenbergScene::moveStatic(float time)
     glm::mat4 model;
     printf("time:%f\n", time);
     static bool exch = false;
-    if (time > 70.0f && !exch) {
+    if (time > 120.0f && !exch) {
         exch = true;
          rail->getBody()->setFriction(0.0f);
          ball->getBody()->setCollisionShape(new btSphereShape(8.5f));
@@ -359,7 +366,7 @@ void GutenbergScene::moveStatic(float time)
 
     model = glm::translate(model, glm::vec3(wm_blade->getOriginalLocation().getX(), wm_blade->getOriginalLocation().getY(), wm_blade->getOriginalLocation().getZ()));
     model = glm::rotate(model, glm::radians(140.0f), AXIS_Z);
-    if (time > 30.0f)
+    if (time > 70.0f)
         model = glm::rotate(model, glm::radians(40 * time), AXIS_Z);
     
     trans.setFromOpenGLMatrix(glm::value_ptr(model));
@@ -386,7 +393,8 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
 
     ball->draw();
-    ground->draw();
+    //ground->draw();
+    rounddesk->draw();
     try7->draw();
     wm_blade->draw();
     wm_body->draw();
@@ -407,7 +415,12 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     block6->draw();
     block7->draw();
     block8->draw();
+    block9->draw();
     frame->draw();
+    desk_lamp->draw();
+    clock->draw();
+    lime->draw();
+    potted_plant->draw();
 
     // render light source (simply re-render sphere at light positions)
     // this looks a bit off as we use the same shader, but it'll make their positions obvious and 
@@ -422,7 +435,7 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, newPos);
-        model = glm::scale(model, glm::vec3(0.5f));
+        model = glm::scale(model, glm::vec3(3.5f));
         pbrShader->setMat4("model", model);
         //renderCube();
         //renderSphere();

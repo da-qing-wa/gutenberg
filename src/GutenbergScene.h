@@ -11,19 +11,15 @@
 class GutenbergScene {
 protected:
     // shaders
-    //Shader *multilightShader;
-    MultiLightShader *multilightShader;
-    SkyboxShader *skyboxShader;
-    //Shader* pbrShader;
     Shader* equirectangularToCubemapShader;
     Shader* irradianceShader;
     Shader* prefilterShader;
     Shader* brdfShader;
 
-    //Shader* backgroundShader;
-
     // objects
     StaticObject *ground;
+    StaticObject *rounddesk;
+
     StaticObject *rail;
 
     StaticObject *wm_blade;
@@ -51,6 +47,7 @@ protected:
     MovingObject* block6;
     MovingObject* block7;
     MovingObject* block8;
+    MovingObject* block9;
     //StaticObject* block1;
     //StaticObject* block2;
     //StaticObject* block3;
@@ -60,13 +57,10 @@ protected:
     //StaticObject* block7;
     //StaticObject* block8;
     StaticObject* frame;
-
-    //// gold
-    //unsigned int goldAlbedoMap;
-    //unsigned int goldNormalMap;
-    //unsigned int goldMetallicMap;
-    //unsigned int goldRoughnessMap;
-    //unsigned int goldAOMap;
+    StaticObject* desk_lamp;
+    StaticObject* clock;
+    StaticObject* lime;
+    StaticObject* potted_plant;
 
     unsigned int envCubemap;
     unsigned int irradianceMap;
@@ -74,18 +68,18 @@ protected:
     unsigned int brdfLUTTexture;
 
     // lights
-// ------
+    // ------
     glm::vec3 lightPositions[4] = {
-        glm::vec3(-10.0f,  10.0f, 10.0f),
-        glm::vec3(10.0f,  10.0f, 10.0f),
-        glm::vec3(-10.0f, -10.0f, 10.0f),
-        glm::vec3(10.0f, -10.0f, 10.0f),
+        glm::vec3(-150.156f,  78.2362f, -137.485f),
+        glm::vec3(-130.156f,  78.2362f, -137.485f),
+        glm::vec3(-150.156f,  78.2362f, -117.485f),
+        glm::vec3(-155.156f,  78.2362f, -147.485f),
     };
     glm::vec3 lightColors[4] = {
-        glm::vec3(300.0f, 300.0f, 300.0f),
-        glm::vec3(300.0f, 300.0f, 300.0f),
-        glm::vec3(300.0f, 300.0f, 300.0f),
-        glm::vec3(300.0f, 300.0f, 300.0f)
+        glm::vec3(30000.0f, 30000.0f, 30000.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
     };
 
 public:
