@@ -25,9 +25,9 @@ protected:
     StaticObject *wm_blade;
     StaticObject *wm_body;
 
-    StaticObject *try3;
-    StaticObject *try6;
-    StaticObject *try7;
+    StaticObject *table;
+    StaticObject *slide1;
+    StaticObject *slide2;
 
     MovingObject *ball;
     
@@ -48,6 +48,7 @@ protected:
     MovingObject* block7;
     MovingObject* block8;
     MovingObject* block9;
+
     StaticObject* desk_lamp;
     StaticObject* clock;
     StaticObject* lime;

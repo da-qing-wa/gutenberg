@@ -12,7 +12,7 @@ GutenbergScene::GutenbergScene()
     pbrShader = new Shader("./resources/shader/pbr/pbr.vs", "./resources/shader/pbr/pbr.fs");
     equirectangularToCubemapShader = new Shader("./resources/shader/equirectangularToCubemap/cubemap.vs", "./resources/shader/equirectangularToCubemap/equirectangular_to_cubemap.fs");
     irradianceShader = new Shader("./resources/shader/irradiance/cubemap.vs", "./resources/shader/irradiance/irradiance_convolution.fs");
-    prefilterShader= new Shader("./resources/shader/prefilter/cubemap.vs", "./resources/shader/prefilter/prefilter.fs");
+    prefilterShader = new Shader("./resources/shader/prefilter/cubemap.vs", "./resources/shader/prefilter/prefilter.fs");
     brdfShader = new Shader("./resources/shader/brdf/brdf.vs", "./resources/shader/brdf/brdf.fs");
     backgroundShader = new Shader("./resources/shader/background/background.vs", "./resources/shader/background/background.fs");
 
@@ -47,7 +47,7 @@ GutenbergScene::GutenbergScene()
     stbi_set_flip_vertically_on_load(true);
     int width, height, nrComponents;
     float* data = stbi_loadf("resources/textures/hdr/Mt-Washington-Gold-Room_Ref.hdr", &width, &height, &nrComponents, 0);
-    
+
     unsigned int hdrTexture;
     if (data)
     {
@@ -69,7 +69,7 @@ GutenbergScene::GutenbergScene()
 
     // pbr: setup cubemap to render to and attach to framebuffer
     // ---------------------------------------------------------
-    
+
     glGenTextures(1, &envCubemap);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
     for (unsigned int i = 0; i < 6; ++i)
@@ -239,7 +239,7 @@ GutenbergScene::GutenbergScene()
     rounddesk = new StaticObject("rounddesk", pbrShader, btVector3(1, 1, 1), btVector3(-100, -474.3, 0), 0.5f);
     ground = new StaticObject("ground", pbrShader, btVector3(2.0, 0.1, 2.0), btVector3(-100, -23.1, 0), 0.5f, BOX_SHAPE_PROXYTYPE);
 
-    try7 = new StaticObject("try7", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-28, 0, 0), 0.3f);
+    slide1 = new StaticObject("try7", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-28, 0, 0), 0.3f);
     wm_blade = new StaticObject("wm_blade", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(95.74, 46.81, -136.0), 0.3f);
     wm_body = new StaticObject("wm_body", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-11.2, 0, -40), 0.3f);
     rail = new StaticObject("rail", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(8, 7, 0), 0.3f);
@@ -251,19 +251,19 @@ GutenbergScene::GutenbergScene()
     dom5 = new MovingObject("dom5", 50.0, pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-170.49, 2.3072, -0.28), 0.5f, BOX_SHAPE_PROXYTYPE);
 
     ball2 = new MovingObject("ball2", 30.0, pbrShader, btVector3(ball_rad / 2.54, ball_rad / 2.54, ball_rad / 2.54), btVector3(-190.0, 30.28, -0.0), 0.001f);
-    try3 = new StaticObject("try3", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
-    try6 = new StaticObject("try6", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
+    table = new StaticObject("try3", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
+    slide2 = new StaticObject("try6", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.03f);
 
-    float block_friction = 10.1f, block_width=1.0f;
-    block1 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 13.475, -10), block_friction);
-    block2 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 13.475, 0), block_friction);
-    block3 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 13.475, 10), block_friction);
-    block4 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 0, -10), block_friction);
-    block5 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 0, 0), block_friction);
-    block6 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, 0, 10), block_friction);
-    block7 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, -13.475, -10), block_friction);
-    block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, -13.475, 0), block_friction);
-    block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(-348, -13.475, 10), block_friction);
+    float block_friction = 10.1f, block_width = 1.0f, wall_x1 = -348;
+    block1 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, 13.475, -10), block_friction);
+    block2 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, 13.475, 0), block_friction);
+    block3 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, 13.475, 10), block_friction);
+    block4 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, 0, -10), block_friction);
+    block5 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, 0, 0), block_friction);
+    block6 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, 0, 10), block_friction);
+    block7 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, -10), block_friction);
+    block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, 0), block_friction);
+    block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, 10), block_friction);
 
     desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
     clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
@@ -275,7 +275,7 @@ void GutenbergScene::addPhysics(BulletWorld *world)
 {
     world->addRigidBody(ball->getBody());
     world->addRigidBody(ground->getBody());
-    world->addRigidBody(try7->getBody());
+    world->addRigidBody(slide1->getBody());
     world->addRigidBody(wm_blade->getBody());
     world->addRigidBody(wm_body->getBody());
     world->addRigidBody(rail->getBody());
@@ -285,8 +285,8 @@ void GutenbergScene::addPhysics(BulletWorld *world)
     world->addRigidBody(dom4->getBody());
     world->addRigidBody(dom5->getBody());
     world->addRigidBody(ball2->getBody());
-    world->addRigidBody(try3->getBody());
-    world->addRigidBody(try6->getBody());
+    world->addRigidBody(table->getBody());
+    world->addRigidBody(slide2->getBody());
     world->addRigidBody(block1->getBody());
     world->addRigidBody(block2->getBody());
     world->addRigidBody(block3->getBody());
@@ -307,7 +307,7 @@ GutenbergScene::~GutenbergScene()
     delete ball;
     delete ground;
     delete rounddesk;
-    delete try7;
+    delete slide1;
     delete wm_blade;
     delete wm_body;
     delete rail;
@@ -317,8 +317,8 @@ GutenbergScene::~GutenbergScene()
     delete dom4;
     delete dom5;
     delete ball2;
-    delete try3;
-    delete try6;
+    delete table;
+    delete slide2;
     delete block1;
     delete block2;
     delete block3;
@@ -372,6 +372,7 @@ void GutenbergScene::moveStatic(float time)
 
 void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
 {
+    //printf("camera:pos(%f,%f,%f),up(%f,%f,%f),YAW(%f),PITCH(%f)\n", camera.Position.x, camera.Position.y, camera.Position.z, camera.Up.x, camera.Up.y, camera.Up.z, camera.Yaw, camera.Pitch);
     // render scene, supplying the convoluted irradiance map to the final shader.
     // ------------------------------------------------------------------------------------------
     pbrShader->use();
@@ -391,7 +392,7 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     ball->draw();
     //ground->draw();
     rounddesk->draw();
-    try7->draw();
+    slide1->draw();
     wm_blade->draw();
     wm_body->draw();
     rail->draw();
@@ -401,8 +402,8 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     dom4->draw();
     dom5->draw();
     ball2->draw();
-    try3->draw();
-    try6->draw();
+    table->draw();
+    slide2->draw();
     block1->draw();
     block2->draw();
     block3->draw();
