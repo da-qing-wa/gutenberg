@@ -138,15 +138,17 @@ btRigidBody* MovingObject::getBody()
     return mBody;
 }
 
-void MovingObject::draw()
+void MovingObject::draw(Shader* shader)
 {
-    objShader->use();
     mBody->getMotionState()->getWorldTransform(mWorldTrans);
     btScalar buf[16];
     mWorldTrans.getOpenGLMatrix(buf);
     // render the loaded model
     glm::mat4 model = glm::make_mat4(buf);
     model = glm::scale(model, glm::vec3(objScaling[0], objScaling[1], objScaling[2]));
-    objShader->setMat4("model", model);
-    objModel.Draw(objShader);
+    if (shader == nullptr)
+        shader = objShader;
+    shader->use();
+    shader->setMat4("model", model);
+    objModel.Draw(shader);
 }

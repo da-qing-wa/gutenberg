@@ -160,6 +160,11 @@
     <ClInclude Include="src\shader\MultiLightShader.h" />
     <ClInclude Include="src\shader\SkyboxShader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="lib\assimp-vc140-mt.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

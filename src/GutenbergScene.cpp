@@ -15,6 +15,7 @@ GutenbergScene::GutenbergScene()
     prefilterShader = new Shader("./resources/shader/prefilter/cubemap.vs", "./resources/shader/prefilter/prefilter.fs");
     brdfShader = new Shader("./resources/shader/brdf/brdf.vs", "./resources/shader/brdf/brdf.fs");
     backgroundShader = new Shader("./resources/shader/background/background.vs", "./resources/shader/background/background.fs");
+    simpleDepthShader = new Shader("./resources/shader/shadow_depth/shadow_depth.vs", "./resources/shader/shadow_depth/shadow_depth.fs");
 
     pbrShader->use();
     pbrShader->setInt("irradianceMap", 0);
@@ -29,6 +30,24 @@ GutenbergScene::GutenbergScene()
     backgroundShader->use();
     backgroundShader->setInt("environmentMap", 0);
 
+    // configure depth map FBO
+    // -----------------------
+    glGenFramebuffers(1, &depthMapFBO);
+    // create depth texture
+    glGenTextures(1, &depthMap);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    // attach depth texture as FBO's depth buffer
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // pbr: setup framebuffer
     // ----------------------
@@ -341,6 +360,7 @@ GutenbergScene::~GutenbergScene()
     delete prefilterShader;
     delete brdfShader;
     delete backgroundShader;
+    delete simpleDepthShader;
 }
 
 void GutenbergScene::moveStatic(float time)
@@ -372,7 +392,39 @@ void GutenbergScene::moveStatic(float time)
     wm_blade->getBody()->setWorldTransform(trans);
 }
 
-void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
+void GutenbergScene::drawAll(Shader* shader)
+{
+    ball->draw(shader);
+    //ground->draw(shader);
+    rounddesk->draw(shader);
+    slide1->draw(shader);
+    wm_blade->draw(shader);
+    wm_body->draw(shader);
+    rail->draw(shader);
+    dom1->draw(shader);
+    dom2->draw(shader);
+    dom3->draw(shader);
+    dom4->draw(shader);
+    dom5->draw(shader);
+    ball2->draw(shader);
+    table->draw(shader);
+    slide2->draw(shader);
+    block1->draw(shader);
+    block2->draw(shader);
+    block3->draw(shader);
+    block4->draw(shader);
+    block5->draw(shader);
+    block6->draw(shader);
+    block7->draw(shader);
+    block8->draw(shader);
+    block9->draw(shader);
+    desk_lamp->draw(shader);
+    clock->draw(shader);
+    lime->draw(shader);
+    potted_plant->draw(shader);
+}
+
+void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, float SCR_WIDTH, float SCR_HEIGHT)
 {
     //printf("camera:pos(%f,%f,%f),up(%f,%f,%f),YAW(%f),PITCH(%f)\n", camera.Position.x, camera.Position.y, camera.Position.z, camera.Up.x, camera.Up.y, camera.Up.z, camera.Yaw, camera.Pitch);
     // render scene, supplying the convoluted irradiance map to the final shader.
@@ -382,6 +434,7 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     glm::mat4 view = camera.GetViewMatrix();
     pbrShader->setMat4("view", view);
     pbrShader->setVec3("camPos", camera.Position);
+    pbrShader->setInt("shadowMap", 20);
 
     // bind pre-computed IBL data
     glActiveTexture(GL_TEXTURE0);
@@ -391,34 +444,33 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
 
-    ball->draw();
-    //ground->draw();
-    rounddesk->draw();
-    slide1->draw();
-    wm_blade->draw();
-    wm_body->draw();
-    rail->draw();
-    dom1->draw();
-    dom2->draw();
-    dom3->draw();
-    dom4->draw();
-    dom5->draw();
-    ball2->draw();
-    table->draw();
-    slide2->draw();
-    block1->draw();
-    block2->draw();
-    block3->draw();
-    block4->draw();
-    block5->draw();
-    block6->draw();
-    block7->draw();
-    block8->draw();
-    block9->draw();
-    desk_lamp->draw();
-    clock->draw();
-    lime->draw();
-    potted_plant->draw();
+    // 1. render depth of scene to texture (from light's perspective)
+    // --------------------------------------------------------------
+    glm::mat4 lightProjection, lightView;
+    glm::mat4 lightSpaceMatrix;
+    lightProjection = glm::perspective(glm::radians(45.0f), (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT, 0.1f, 10000.0f);
+    lightView = glm::lookAt(lightPositions[0], glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+    lightSpaceMatrix = lightProjection * lightView;
+    // render scene from light's point of view
+    pbrShader->use();
+    pbrShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+    simpleDepthShader->use();
+    simpleDepthShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+    glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    drawAll(simpleDepthShader);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    // reset viewport
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    pbrShader->use();
+    glActiveTexture(GL_TEXTURE20);
+    glBindTexture(GL_TEXTURE_2D, depthMap);
+    drawAll(pbrShader);
 
     // render light source (simply re-render sphere at light positions)
     // this looks a bit off as we use the same shader, but it'll make their positions obvious and 
