@@ -59,6 +59,25 @@ protected:
     unsigned int prefilterMap;
     unsigned int brdfLUTTexture;
 
+    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+    unsigned int depthMapFBO;
+    unsigned int depthMap;
+    float borderColor[4] = { 1.0, 1.0, 1.0, 1.0 };
+
+    void drawAll(Shader* shader = nullptr);
+
+public:
+    GutenbergScene();
+    ~GutenbergScene();
+
+    void addPhysics(BulletWorld *world);
+    void moveStatic(float time);
+    void render(const glm::mat4& projection, const Camera& camera, float SCR_WIDTH, float SCR_HEIGHT);
+
+    Shader* pbrShader;
+    Shader* simpleDepthShader;
+    Shader* backgroundShader;
+
     // lights
     // ------
     glm::vec3 lightPositions[4] = {
@@ -73,17 +92,6 @@ protected:
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
     };
-
-public:
-    GutenbergScene();
-    ~GutenbergScene();
-
-    void addPhysics(BulletWorld *world);
-    void moveStatic(float time);
-    void render(const glm::mat4& projection, const Camera& camera);
-
-    Shader* pbrShader;
-    Shader* backgroundShader;
 };
 
 #endif /* _GUTENBERG_SCENE_H */

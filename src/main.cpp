@@ -207,7 +207,7 @@ int main(int argc, char* argv[])
 		//UpdateCamera();
 
 		// render the scene
-		mScene->render(projection, camera);
+		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);
 
 
 
