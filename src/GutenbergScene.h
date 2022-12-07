@@ -49,10 +49,10 @@ protected:
     MovingObject* block8;
     MovingObject* block9;
 
-    StaticObject* desk_lamp;
-    StaticObject* clock;
-    StaticObject* lime;
-    StaticObject* potted_plant;
+    //StaticObject* desk_lamp;
+    //StaticObject* clock;
+    //StaticObject* lime;
+    //StaticObject* potted_plant;
 
     unsigned int envCubemap;
     unsigned int irradianceMap;

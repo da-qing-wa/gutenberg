@@ -284,12 +284,10 @@ GutenbergScene::GutenbergScene()
     block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, 0), block_friction);
     block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, 10), block_friction);
 
-    desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
-    clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
-    lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
-    potted_plant = new StaticObject("potted_plant", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
-
-    fdata.open("obj_data.txt", ios::out);
+    //desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
+    //clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    //lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    //potted_plant = new StaticObject("potted_plant", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
 }
 
 void GutenbergScene::addPhysics(BulletWorld *world)
@@ -317,10 +315,10 @@ void GutenbergScene::addPhysics(BulletWorld *world)
     world->addRigidBody(block7->getBody());
     world->addRigidBody(block8->getBody());
     world->addRigidBody(block9->getBody());
-    world->addRigidBody(desk_lamp->getBody());
-    world->addRigidBody(clock->getBody());
-    world->addRigidBody(lime->getBody());
-    world->addRigidBody(potted_plant->getBody());
+    //world->addRigidBody(desk_lamp->getBody());
+    //world->addRigidBody(clock->getBody());
+    //world->addRigidBody(lime->getBody());
+    //world->addRigidBody(potted_plant->getBody());
 }
 
 GutenbergScene::~GutenbergScene()
@@ -349,10 +347,10 @@ GutenbergScene::~GutenbergScene()
     delete block7;
     delete block8;
     delete block9;
-    delete desk_lamp;
-    delete clock;
-    delete lime;
-    delete potted_plant;
+    //delete desk_lamp;
+    //delete clock;
+    //delete lime;
+    //delete potted_plant;
 
     delete pbrShader;
     delete equirectangularToCubemapShader;
@@ -418,10 +416,10 @@ void GutenbergScene::drawAll(Shader* shader)
     block7->draw(shader);
     block8->draw(shader);
     block9->draw(shader);
-    desk_lamp->draw(shader);
-    clock->draw(shader);
-    lime->draw(shader);
-    potted_plant->draw(shader);
+    //desk_lamp->draw(shader);
+    //clock->draw(shader);
+    //lime->draw(shader);
+    //potted_plant->draw(shader);
 }
 
 void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, float SCR_WIDTH, float SCR_HEIGHT)
@@ -472,6 +470,8 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, f
     glBindTexture(GL_TEXTURE_2D, depthMap);
     drawAll(pbrShader);
 
+    
+
     // render light source (simply re-render sphere at light positions)
     // this looks a bit off as we use the same shader, but it'll make their positions obvious and 
     // keeps the codeprint small.
@@ -498,21 +498,6 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, f
     //glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map
     //glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap); // display prefilter map
     renderCube();
-
-    string one_frame_data="";
-    one_frame_data += std::to_string(camera.Position.x) + " " + std::to_string(camera.Position.y) + " " + std::to_string(camera.Position.z);
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            one_frame_data += " " + std::to_string(view[i][j]);
-        }
-    }
-    btScalar buf[16];
-    ball->getBody()->getCenterOfMassTransform().getOpenGLMatrix(buf);
-    for (int i = 0; i < 16; i++) {
-        one_frame_data += " " + std::to_string(buf[i]);
-    }
-    one_frame_data += "\n";
-    fdata.write(one_frame_data.c_str(),one_frame_data.size());
 }
 
 
