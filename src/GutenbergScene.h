@@ -7,6 +7,7 @@
 #include "shader/MultiLightShader.h"
 #include "shader/SkyboxShader.h"
 #include "learnopengl/camera.h"
+#include <fstream>
 
 class GutenbergScene {
 protected:
@@ -84,6 +85,8 @@ public:
 
     Shader* pbrShader;
     Shader* backgroundShader;
+
+    fstream fdata;
 };
 
 #endif /* _GUTENBERG_SCENE_H */

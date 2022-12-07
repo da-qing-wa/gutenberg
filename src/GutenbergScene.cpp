@@ -237,7 +237,7 @@ GutenbergScene::GutenbergScene()
 
     // objects
     rounddesk = new StaticObject("rounddesk", pbrShader, btVector3(1, 1, 1), btVector3(-100, -474.3, 0), 0.5f);
-    ground = new StaticObject("ground", pbrShader, btVector3(2.0, 0.1, 2.0), btVector3(-100, -23.1, 0), 0.5f, BOX_SHAPE_PROXYTYPE);
+    ground = new StaticObject("ground", pbrShader, btVector3(1.0, 0.1, 1.0), btVector3(-100, -23.1, 0), 0.5f);
 
     slide1 = new StaticObject("try7", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-28, 0, 0), 0.3f);
     wm_blade = new StaticObject("wm_blade", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(95.74, 46.81, -136.0), 0.3f);
@@ -269,6 +269,8 @@ GutenbergScene::GutenbergScene()
     clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
     lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
     potted_plant = new StaticObject("potted_plant", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+
+    fdata.open("obj_data.txt", ios::out);
 }
 
 void GutenbergScene::addPhysics(BulletWorld *world)
@@ -444,6 +446,21 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera)
     //glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map
     //glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap); // display prefilter map
     renderCube();
+
+    string one_frame_data="";
+    one_frame_data += std::to_string(camera.Position.x) + " " + std::to_string(camera.Position.y) + " " + std::to_string(camera.Position.z);
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            one_frame_data += " " + std::to_string(view[i][j]);
+        }
+    }
+    btScalar buf[16];
+    ball->getBody()->getCenterOfMassTransform().getOpenGLMatrix(buf);
+    for (int i = 0; i < 16; i++) {
+        one_frame_data += " " + std::to_string(buf[i]);
+    }
+    one_frame_data += "\n";
+    fdata.write(one_frame_data.c_str(),one_frame_data.size());
 }
 
 
