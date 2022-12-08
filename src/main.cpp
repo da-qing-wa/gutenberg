@@ -35,6 +35,7 @@ float deltaTime = 0.0f; // time between current frame and last frame
 float lastFrame = 0.0f;
 float lastX = SCR_WIDTH / 2.0f; float lastY = SCR_HEIGHT / 2.0f; bool firstMouse = true;
 float last = 0.0f;
+const float PI = 3.14159265359;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height); 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos); 
@@ -81,9 +82,24 @@ void* saveFrameTask(void* arg)
 }
 #endif
 
-void UpdateCamera() 
+void UpdateCamera(float t, float a, float b)
 {
-
+	glm::vec3 center(-100, 0, -70);
+	float init_theta = 72.93 / 180 * PI;
+	camera.Position = glm::vec3(a*cos(t+ init_theta)+ center.x, camera.Position.y,b*sin(t+ init_theta)+ center.z);
+	if (camera.Position.x < 0)
+	{
+		camera.Yaw = atan(camera.Position.z / camera.Position.x) * 180 / PI;
+	}
+	else if (camera.Position.z > 0)
+	{
+		camera.Yaw = atan(camera.Position.z / camera.Position.x) * 180 / PI - 180;
+	}
+	else
+	{
+		camera.Yaw = atan(camera.Position.z / camera.Position.x) * 180 / PI + 180;
+	}
+	camera.updateCameraVectors();
 }
 
 // loads a cubemap texture from 6 individual texture faces
@@ -141,8 +157,8 @@ int main(int argc, char* argv[])
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetCursorPosCallback(window, mouse_callback); 
-	glfwSetScrollCallback(window, scroll_callback); // tell GLFW to capture our mouse 
+	//glfwSetCursorPosCallback(window, mouse_callback); 
+	//glfwSetScrollCallback(window, scroll_callback); // tell GLFW to capture our mouse 
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -204,12 +220,11 @@ int main(int argc, char* argv[])
 		mWorld->step(currentFrame - lastFrame);
 
 		// update the camera
-		//UpdateCamera();
+		float view_a = 500, view_b = 300;
+		UpdateCamera(0.003 * currentFrame, view_a, view_b);
 
 		// render the scene
 		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);
-
-
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
