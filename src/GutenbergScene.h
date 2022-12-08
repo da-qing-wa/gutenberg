@@ -61,7 +61,8 @@ protected:
 
     const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
     unsigned int depthMapFBO;
-    unsigned int depthMap;
+    //unsigned int depthMap;
+    unsigned int depthCubemap;
     float borderColor[4] = { 1.0, 1.0, 1.0, 1.0 };
 
     void drawAll(Shader* shader = nullptr);
@@ -81,13 +82,13 @@ public:
     // lights
     // ------
     glm::vec3 lightPositions[4] = {
-        glm::vec3(-150.156f,  78.2362f, -137.485f),
+        glm::vec3(-150.156f,  278.2362f, -137.485f),
         glm::vec3(-130.156f,  78.2362f, -137.485f),
         glm::vec3(-150.156f,  78.2362f, -117.485f),
         glm::vec3(-155.156f,  78.2362f, -147.485f),
     };
     glm::vec3 lightColors[4] = {
-        glm::vec3(30000.0f, 30000.0f, 30000.0f),
+        glm::vec3(3000000.0f, 3000000.0f, 3000000.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
