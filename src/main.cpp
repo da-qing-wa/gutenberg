@@ -17,7 +17,7 @@
 #include "GutenbergScene.h"
 #include "learnopengl/camera.h"
 
-// #define OFFLINE_RENDERING
+#define OFFLINE_RENDERING
 
 #ifdef OFFLINE_RENDERING
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -237,7 +237,7 @@ int main(int argc, char* argv[])
 
 #define FRAMERATE 60
 
-	const float totalLength = 60.0f;
+	const float totalLength = 80.0f;
 	const float dt = 1.0f / (FRAMERATE);
 	const int frameCount = (int)(totalLength / dt) + 1;
 	
@@ -266,7 +266,7 @@ int main(int argc, char* argv[])
 
 		// update the camera
 		float view_a = 500, view_b = 300;
-		UpdateCamera(0.003 * t, view_a, view_b);
+		UpdateCamera(0.03 * t, view_a, view_b);
 
 		// render the scene
 		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);
@@ -300,7 +300,7 @@ int main(int argc, char* argv[])
     std::string result;
 	char cmd[128] {};
 	sprintf(cmd, "ffmpeg -framerate %d -pattern_type glob -i '%s*.jpg' -c:v libx264 -pix_fmt yuv420p %ld.mp4",
-		FRAMERATE, path.c_str(), ptime);
+		FRAMERATE * 4, path.c_str(), ptime);
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
     if (!pipe) {
         throw std::runtime_error("popen() failed!");
