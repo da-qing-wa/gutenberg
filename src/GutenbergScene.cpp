@@ -305,10 +305,10 @@ GutenbergScene::GutenbergScene()
     block8 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, 0), block_friction);
     block9 = new MovingObject("block1", 5.0, pbrShader, btVector3(block_width, 1.0, 1.0), btVector3(wall_x1, -13.475, 10), block_friction);
 
-    //desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
-    //clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
-    //lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
-    //potted_plant = new StaticObject("potted_plant", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    desk_lamp = new StaticObject("desk_lamp", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(-160.79, -23.1, -140.86), 0.5f);
+    clock = new StaticObject("clock", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    lime = new StaticObject("lime", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
+    potted_plant = new StaticObject("potted_plant", pbrShader, btVector3(1.0, 1.0, 1.0), btVector3(0, 0, 0), 0.5f);
 }
 
 void GutenbergScene::addPhysics(BulletWorld *world)
@@ -336,10 +336,10 @@ void GutenbergScene::addPhysics(BulletWorld *world)
     world->addRigidBody(block7->getBody());
     world->addRigidBody(block8->getBody());
     world->addRigidBody(block9->getBody());
-    //world->addRigidBody(desk_lamp->getBody());
-    //world->addRigidBody(clock->getBody());
-    //world->addRigidBody(lime->getBody());
-    //world->addRigidBody(potted_plant->getBody());
+    world->addRigidBody(desk_lamp->getBody());
+    world->addRigidBody(clock->getBody());
+    world->addRigidBody(lime->getBody());
+    world->addRigidBody(potted_plant->getBody());
 }
 
 GutenbergScene::~GutenbergScene()
@@ -368,10 +368,10 @@ GutenbergScene::~GutenbergScene()
     delete block7;
     delete block8;
     delete block9;
-    //delete desk_lamp;
-    //delete clock;
-    //delete lime;
-    //delete potted_plant;
+    delete desk_lamp;
+    delete clock;
+    delete lime;
+    delete potted_plant;
 
     delete pbrShader;
     delete equirectangularToCubemapShader;
@@ -437,10 +437,11 @@ void GutenbergScene::drawAll(Shader* shader)
     block7->draw(shader);
     block8->draw(shader);
     block9->draw(shader);
-    //desk_lamp->draw(shader);
-    //clock->draw(shader);
-    //lime->draw(shader);
-    //potted_plant->draw(shader);
+    if (shader != simpleDepthShader)
+        desk_lamp->draw(shader);
+    clock->draw(shader);
+    lime->draw(shader);
+    potted_plant->draw(shader);
 }
 
 void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, float SCR_WIDTH, float SCR_HEIGHT)
@@ -468,8 +469,8 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, f
     // 0. Create depth cubemap transformation matrices
     GLfloat aspect = (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT;
     GLfloat near = 0.1f;
-    GLfloat far = 450.0f;
-    glm::mat4 shadowProj = glm::perspective(90.0f, aspect, near, far);
+    GLfloat far = 500.0f;
+    glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, near, far);
     std::vector<glm::mat4> shadowTransforms;
     shadowTransforms.push_back(shadowProj * glm::lookAt(lightPositions[0], lightPositions[0] + glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
     shadowTransforms.push_back(shadowProj * glm::lookAt(lightPositions[0], lightPositions[0] + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
@@ -533,7 +534,7 @@ void GutenbergScene::render(const glm::mat4& projection, const Camera& camera, f
         model = glm::scale(model, glm::vec3(3.5f));
         pbrShader->setMat4("model", model);
         //renderCube();
-        renderSphere();
+        //renderSphere();
     }
 
     // render skybox (render as last to prevent overdraw)

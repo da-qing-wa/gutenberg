@@ -49,17 +49,17 @@ protected:
     MovingObject* block8;
     MovingObject* block9;
 
-    //StaticObject* desk_lamp;
-    //StaticObject* clock;
-    //StaticObject* lime;
-    //StaticObject* potted_plant;
+    StaticObject* desk_lamp;
+    StaticObject* clock;
+    StaticObject* lime;
+    StaticObject* potted_plant;
 
     unsigned int envCubemap;
     unsigned int irradianceMap;
     unsigned int prefilterMap;
     unsigned int brdfLUTTexture;
 
-    const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+    const unsigned int SHADOW_WIDTH = 8192, SHADOW_HEIGHT = 8192;
     unsigned int depthMapFBO;
     //unsigned int depthMap;
     unsigned int depthCubemap;
@@ -82,7 +82,7 @@ public:
     // lights
     // ------
     glm::vec3 lightPositions[4] = {
-        glm::vec3(-150.156f,  278.2362f, -137.485f),
+        glm::vec3(-150.156f,  78.2362f, -137.485f),
         glm::vec3(-130.156f,  78.2362f, -137.485f),
         glm::vec3(-150.156f,  78.2362f, -117.485f),
         glm::vec3(-155.156f,  78.2362f, -147.485f),
