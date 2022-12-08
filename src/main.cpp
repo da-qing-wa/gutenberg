@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
 	//glfwSetCursorPosCallback(window, mouse_callback); 
 	//glfwSetScrollCallback(window, scroll_callback); // tell GLFW to capture our mouse 
 
-	// glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -237,7 +237,7 @@ int main(int argc, char* argv[])
 
 #define FRAMERATE 60
 
-	const float totalLength = 15.0f;
+	const float totalLength = 60.0f;
 	const float dt = 1.0f / (FRAMERATE);
 	const int frameCount = (int)(totalLength / dt) + 1;
 	
@@ -265,10 +265,11 @@ int main(int argc, char* argv[])
 			mWorld->step(dt);
 
 		// update the camera
-		//UpdateCamera();
+		float view_a = 500, view_b = 300;
+		UpdateCamera(0.003 * t, view_a, view_b);
 
 		// render the scene
-		mScene->render(projection, camera);
+		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
