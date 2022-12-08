@@ -11,27 +11,23 @@
 class GutenbergScene {
 protected:
     // shaders
-    //Shader *multilightShader;
-    MultiLightShader *multilightShader;
-    SkyboxShader *skyboxShader;
-    //Shader* pbrShader;
     Shader* equirectangularToCubemapShader;
     Shader* irradianceShader;
     Shader* prefilterShader;
     Shader* brdfShader;
 
-    //Shader* backgroundShader;
-
     // objects
     StaticObject *ground;
+    StaticObject *rounddesk;
+
     StaticObject *rail;
 
     StaticObject *wm_blade;
     StaticObject *wm_body;
 
-    StaticObject *try3;
-    StaticObject *try6;
-    StaticObject *try7;
+    StaticObject *table;
+    StaticObject *slide1;
+    StaticObject *slide2;
 
     MovingObject *ball;
     
@@ -51,42 +47,25 @@ protected:
     MovingObject* block6;
     MovingObject* block7;
     MovingObject* block8;
-    //StaticObject* block1;
-    //StaticObject* block2;
-    //StaticObject* block3;
-    //StaticObject* block4;
-    //StaticObject* block5;
-    //StaticObject* block6;
-    //StaticObject* block7;
-    //StaticObject* block8;
-    StaticObject* frame;
+    MovingObject* block9;
 
-    //// gold
-    //unsigned int goldAlbedoMap;
-    //unsigned int goldNormalMap;
-    //unsigned int goldMetallicMap;
-    //unsigned int goldRoughnessMap;
-    //unsigned int goldAOMap;
+    StaticObject* desk_lamp;
+    StaticObject* clock;
+    StaticObject* lime;
+    StaticObject* potted_plant;
 
     unsigned int envCubemap;
     unsigned int irradianceMap;
     unsigned int prefilterMap;
     unsigned int brdfLUTTexture;
 
-    // lights
-// ------
-    glm::vec3 lightPositions[4] = {
-        glm::vec3(-10.0f,  10.0f, 10.0f),
-        glm::vec3(10.0f,  10.0f, 10.0f),
-        glm::vec3(-10.0f, -10.0f, 10.0f),
-        glm::vec3(10.0f, -10.0f, 10.0f),
-    };
-    glm::vec3 lightColors[4] = {
-        glm::vec3(300.0f, 300.0f, 300.0f),
-        glm::vec3(300.0f, 300.0f, 300.0f),
-        glm::vec3(300.0f, 300.0f, 300.0f),
-        glm::vec3(300.0f, 300.0f, 300.0f)
-    };
+    const unsigned int SHADOW_WIDTH = 8192, SHADOW_HEIGHT = 8192;
+    unsigned int depthMapFBO;
+    //unsigned int depthMap;
+    unsigned int depthCubemap;
+    float borderColor[4] = { 1.0, 1.0, 1.0, 1.0 };
+
+    void drawAll(Shader* shader = nullptr);
 
 public:
     GutenbergScene();
@@ -94,10 +73,26 @@ public:
 
     void addPhysics(BulletWorld *world);
     void moveStatic(float time);
-    void render(const glm::mat4& projection, const Camera& camera);
+    void render(const glm::mat4& projection, const Camera& camera, float SCR_WIDTH, float SCR_HEIGHT);
 
     Shader* pbrShader;
+    Shader* simpleDepthShader;
     Shader* backgroundShader;
+
+    // lights
+    // ------
+    glm::vec3 lightPositions[4] = {
+        glm::vec3(-150.156f,  78.2362f, -137.485f),
+        glm::vec3(-130.156f,  78.2362f, -137.485f),
+        glm::vec3(-150.156f,  78.2362f, -117.485f),
+        glm::vec3(-155.156f,  78.2362f, -147.485f),
+    };
+    glm::vec3 lightColors[4] = {
+        glm::vec3(3000000.0f, 3000000.0f, 3000000.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(0.0f, 0.0f, 0.0f),
+    };
 };
 
 #endif /* _GUTENBERG_SCENE_H */

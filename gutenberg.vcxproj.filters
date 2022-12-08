@@ -105,4 +105,7 @@
       <Filter>头文件\learnopengl</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="lib\assimp-vc140-mt.dll" />
+  </ItemGroup>
 </Project>

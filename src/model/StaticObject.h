@@ -26,7 +26,7 @@ public:
 
     btRigidBody* getBody();
     const btVector3 getOriginalLocation() const;
-    virtual void draw();
+    virtual void draw(Shader* shader = nullptr);
 };
 
 #endif /* _STATIC_OBJECT_H */

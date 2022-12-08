@@ -28,29 +28,18 @@
 // settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
-//Camera camera(glm::vec3(0.0f, 500.0f, -100.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW - 15, PITCH-90);
-//Camera camera(glm::vec3(0.0f, 250.0f, 500.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW - 15, PITCH-30);
-Camera camera(glm::vec3(0.0f, 50.0f, 50.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW - 65, PITCH-10);
-//Camera camera(glm::vec3(-500.0f, 50.0f, 200.0f), glm::vec3(0.0f, 1.0f, 0.0f), YAW + 45, PITCH-10);
 
-//Camera camera(glm::vec3(0.0f, 0.0f,3.0f));
+Camera camera(glm::vec3(110.9f, 164.2f, 361.2f), glm::vec3(0.0f, 1.0f, 0.0f), YAW - 25.92, PITCH - 24.91);
 
 float deltaTime = 0.0f; // time between current frame and last frame 
 float lastFrame = 0.0f;
 float lastX = SCR_WIDTH / 2.0f; float lastY = SCR_HEIGHT / 2.0f; bool firstMouse = true;
 float last = 0.0f;
 
-//void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-//{
-//	glViewport(0, 0, width, height);
-//}
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height); 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos); 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset); 
 void processInput(GLFWwindow* window);
-
-
 
 #ifndef OFFLINE_RENDERING
 float getTimeSecs()
@@ -96,29 +85,6 @@ void UpdateCamera()
 {
 
 }
-
-//void BulletOpenGLApplication::DrawObj(GLInstanceGraphicsShape* glmesh) {
-//}
-//
-//void BulletOpenGLApplication::RotateCamera(float &angle, float value) {
-//	// change the value (it is passed by reference, so we
-//	// can edit it here)
-//	angle -= value;
-//	// keep the value within bounds
-//	if (angle < 0) angle += 360;
-//	if (angle >= 360) angle -= 360;
-//	// update the camera since we changed the angular value
-//	UpdateCamera();
-//}
-//
-//void BulletOpenGLApplication::ZoomCamera(float distance) {
-//	// change the distance value
-//	m_cameraDistance -= distance;
-//	// prevent it from zooming in too far
-//	if (m_cameraDistance < 0.1f) m_cameraDistance = 0.1f;
-//	// update the camera since we changed the zoom distance
-//	UpdateCamera();
-//}
 
 // loads a cubemap texture from 6 individual texture faces
 // order:
@@ -203,8 +169,7 @@ int main(int argc, char* argv[])
 	glm::mat4 view = camera.GetViewMatrix();
 
 	// initialize static shader uniforms before rendering
-// --------------------------------------------------
-//projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	// --------------------------------------------------
 	mScene->pbrShader->use();
 	mScene->pbrShader->setMat4("projection", projection);
 	mScene->backgroundShader->use();
@@ -242,7 +207,7 @@ int main(int argc, char* argv[])
 		//UpdateCamera();
 
 		// render the scene
-		mScene->render(projection, camera);
+		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);
 
 
 

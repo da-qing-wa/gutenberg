@@ -26,7 +26,7 @@ public:
     virtual ~MovingObject();
 
     btRigidBody *getBody();
-    virtual void draw();
+    virtual void draw(Shader *shader = nullptr);
 };
 
 #endif /* _MOVING_OBJECT_H */
