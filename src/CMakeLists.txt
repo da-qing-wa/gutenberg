@@ -27,3 +27,4 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC
 	model shader learnopengl 
 	BulletDynamics BulletCollision LinearMath assimp pthread
 	GL glfw ${OPENGL_LIBRARIES} ${GLFW3_LIBRARY} ${CMAKE_DL_LIBS})
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD 17)
