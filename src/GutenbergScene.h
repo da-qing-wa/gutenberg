@@ -59,7 +59,7 @@ protected:
     unsigned int prefilterMap;
     unsigned int brdfLUTTexture;
 
-    const unsigned int SHADOW_WIDTH = 32768, SHADOW_HEIGHT = 32768;
+    const unsigned int SHADOW_WIDTH = 8192, SHADOW_HEIGHT = 8192;
     unsigned int depthMapFBO;
     //unsigned int depthMap;
     unsigned int depthCubemap;
