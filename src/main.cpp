@@ -14,10 +14,10 @@
 #endif
 
 #include "BulletWorld.h"
-#include "GutenbergScene.h"
 #include "learnopengl/camera.h"
 
-#define OFFLINE_RENDERING
+// #define OFFLINE_RENDERING
+#include "GutenbergScene.h"
 
 #ifdef OFFLINE_RENDERING
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -26,8 +26,8 @@
 #endif
 
 // settings
-const unsigned int SCR_WIDTH = 1600;
-const unsigned int SCR_HEIGHT = 1200;
+const unsigned int SCR_WIDTH = 2160;
+const unsigned int SCR_HEIGHT = 1440;
 
 Camera camera(glm::vec3(110.9f, 164.2f, 361.2f), glm::vec3(0.0f, 1.0f, 0.0f), YAW - 25.92, PITCH - 24.91);
 
@@ -81,24 +81,41 @@ void* saveFrameTask(void* arg)
 	return 0;
 }
 #endif
-
 void UpdateCamera(float t, float a, float b)
 {
-	glm::vec3 center(-100, 0, -70);
-	float init_theta = 72.93 / 180 * PI;
-	camera.Position = glm::vec3(a*cos(t+ init_theta)+ center.x, camera.Position.y,b*sin(t+ init_theta)+ center.z);
-	if (camera.Position.x < 0)
-	{
-		camera.Yaw = atan(camera.Position.z / camera.Position.x) * 180 / PI;
-	}
-	else if (camera.Position.z > 0)
-	{
-		camera.Yaw = atan(camera.Position.z / camera.Position.x) * 180 / PI - 180;
-	}
-	else
-	{
-		camera.Yaw = atan(camera.Position.z / camera.Position.x) * 180 / PI + 180;
-	}
+ glm::vec3 center(-110.0f, 150.0f, -80.2f);
+ float init_theta = 72.93 / 180 * PI;
+ camera.Position = glm::vec3(a*cos(t+ init_theta)+ center.x, center.y,b*sin(t+ init_theta)+ center.z);
+ if (camera.Position.x < center.x)
+ {
+  camera.Yaw = atan((camera.Position.z- center.z) / (camera.Position.x- center.x)) * 180 / PI;
+ }
+ else if (camera.Position.z > center.z)
+ {
+  camera.Yaw = atan((camera.Position.z - center.z) / (camera.Position.x - center.x)) * 180 / PI - 180;
+ }
+ else
+ {
+  camera.Yaw = atan((camera.Position.z - center.z) / (camera.Position.x - center.x)) * 180 / PI + 180;
+ }
+ camera.updateCameraVectors();
+}
+
+void UpdateCamera2(float t)
+{
+	const glm::vec3 kInitPos(-111.0f, 200.0f, -59.2f);
+	const glm::vec3 kUp(0.0f, 1.0f, 0.0f);
+	const float kYaw = YAW + 200.9f;
+	const float kPitch = PITCH - 6.8f;
+
+	camera.Position = glm::vec3(
+		kInitPos.x,
+		kInitPos.y + 0.0 * t,
+		kInitPos.z
+	);
+	camera.Yaw = kYaw;
+	camera.Pitch = kPitch;
+
 	camera.updateCameraVectors();
 }
 
@@ -157,10 +174,12 @@ int main(int argc, char* argv[])
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	//glfwSetCursorPosCallback(window, mouse_callback); 
-	//glfwSetScrollCallback(window, scroll_callback); // tell GLFW to capture our mouse 
+#ifndef OFFLINE_RENDERING
+	glfwSetCursorPosCallback(window, mouse_callback); 
+	glfwSetScrollCallback(window, scroll_callback); // tell GLFW to capture our mouse 
 
-	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+#endif
 
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -220,8 +239,9 @@ int main(int argc, char* argv[])
 		mWorld->step(currentFrame - lastFrame);
 
 		// update the camera
-		float view_a = 500, view_b = 300;
-		UpdateCamera(0.003 * currentFrame, view_a, view_b);
+		// float view_a = 500, view_b = 300;
+		// UpdateCamera(0.003 * currentFrame, view_a, view_b);
+		// UpdateCamera2(currentFrame);
 
 		// render the scene
 		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);
@@ -230,6 +250,7 @@ int main(int argc, char* argv[])
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		// cout << camera.Position.x << ' ' << camera.Position.y << ' ' << camera.Position.z << ' ' << camera.Yaw - YAW << ' ' << camera.Pitch - PITCH << endl;
 
 		lastFrame = currentFrame;
 	}
@@ -237,7 +258,7 @@ int main(int argc, char* argv[])
 
 #define FRAMERATE 60
 
-	const float totalLength = 80.0f;
+	const float totalLength = 100.0f;
 	const float dt = 1.0f / (FRAMERATE);
 	const int frameCount = (int)(totalLength / dt) + 1;
 	
@@ -265,8 +286,9 @@ int main(int argc, char* argv[])
 			mWorld->step(dt);
 
 		// update the camera
-		float view_a = 500, view_b = 300;
-		UpdateCamera(0.03 * t, view_a, view_b);
+		float view_a = 210, view_b = 210;
+		UpdateCamera(0.05 * t, view_a, view_b);
+		// UpdateCamera2(t);
 
 		// render the scene
 		mScene->render(projection, camera, SCR_WIDTH, SCR_HEIGHT);

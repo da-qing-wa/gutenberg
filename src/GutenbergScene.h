@@ -59,7 +59,11 @@ protected:
     unsigned int prefilterMap;
     unsigned int brdfLUTTexture;
 
+#ifdef OFFLINE_RENDERING
     const unsigned int SHADOW_WIDTH = 8192, SHADOW_HEIGHT = 8192;
+#else
+    const unsigned int SHADOW_WIDTH = 4096, SHADOW_HEIGHT = 4096;
+#endif
     unsigned int depthMapFBO;
     //unsigned int depthMap;
     unsigned int depthCubemap;
